@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="WPFTracker.Controls.AppInfoControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Popup x:Name="InputPopup" IsOpen="False" StaysOpen="True" Opened="InputPopup_Opened">
+        <Border Background="White" BorderBrush="Black" BorderThickness="1" Padding="10">
+            <!-- Custom content for the popup -->
+            <StackPanel>
+                <TextBlock Text="Company"/>
+                <TextBox x:Name="CompanyTextBox" KeyDown="InputTextBox_KeyDown"/>
+                <TextBlock Text="AppLink"/>
+                <TextBox x:Name="AppLinkTextBox" KeyDown="InputTextBox_KeyDown"/>
+                <Button Content="Submit" Click="SubmitButton_Click"/>
+            </StackPanel>
+        </Border>
+    </Popup>
+</UserControl>
