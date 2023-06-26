@@ -3,36 +3,56 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:localcontrols="clr-namespace:WPFTracker.Controls" 
         xmlns:wpftracker="clr-namespace:WPFTracker"
-        DataContext="{x:Static wpftracker:PersistentTracker.Instance}"
-        Title="MainWindow">
+        xmlns:local="clr-namespace:WPFTracker"
+        xmlns:utils="clr-namespace:WPFTracker.Utilities"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DataContext="{d:DesignInstance Type=wpftracker:MainWindowViewModel}"
+        mc:Ignorable="d"
+        DataContext="{x:Static wpftracker:MainWindowViewModel.Instance}"
+        Title="MainWindow"
+        SizeToContent="WidthAndHeight"
+         WindowStyle="SingleBorderWindow" AllowsTransparency="True" Background="White">
 
-    <Grid>
-        <localcontrols:AppInfoControl x:Name="AppInfoPopup"></localcontrols:AppInfoControl>
-    <StackPanel Orientation="Horizontal">
-        <StackPanel>
-            <Border BorderBrush="Black" BorderThickness="1">
-                <Grid MouseLeftButtonDown="TextBlock1_MouseLeftButtonDown">
+
+    <Window.Resources>
+        <utils:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+    <DockPanel LastChildFill="True">
+        <StackPanel DockPanel.Dock="Right" Height="38">
+            <Grid>
+            <localcontrols:AppInfoControl x:Name="AppInfoPopup" Grid.Column="0" Grid.Row="1"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+                <Grid x:Name="AppsFiledTodayGrid" MouseLeftButtonDown="TextBlock1_MouseLeftButtonDown">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="40" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black">Apps Filed Today: </TextBlock>
-                        <TextBlock Grid.Column="1" Margin="0,0,10,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Red" Text="{Binding FiledTodayCount}" IsHitTestVisible="True"  />
+                    <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Apps Filed Today:"/></TextBlock>
+                    <TextBlock Grid.Column="1" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Red" Text="{Binding Tracker.FiledTodayCount}" IsHitTestVisible="True" />
                 </Grid>
-            </Border>
-        </StackPanel>
-        <StackPanel>
-            <Border BorderBrush="Black" BorderThickness="1">
-                <Grid MouseLeftButtonDown="TextBlock2_MouseLeftButtonDown">
+
+                <Border x:Name="BadgeBorder" BorderBrush="Black" BorderThickness="1,0,0,0" Margin="0,0,10,0"/>
+                <Grid x:Name="AppsFiledGrid" MouseLeftButtonDown="TextBlock2_MouseLeftButtonDown">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="40" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black">Apps Filed:</TextBlock>
-                        <TextBlock Grid.Column="1" Margin="0,0,10,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black" Text="{Binding FiledTodayCount}" IsHitTestVisible="True"  />
+                    <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Apps Filed:"/></TextBlock>
+                    <TextBlock Grid.Column="1" Margin="0,0,5,10" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black" Text="{Binding Tracker.FiledAppsCount}" IsHitTestVisible="True" />
                 </Grid>
-            </Border>
+
+
+
+                <Viewbox Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,5">
+                    <Grid Width="20" Height="20" Visibility="{Binding ShowBadge}">
+                        <Ellipse Fill="Red" Stroke="White" StrokeThickness="2" />
+                        <TextBlock Text="!" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" />
+                    </Grid>
+                </Viewbox>
+            </StackPanel>
+            </Grid>
         </StackPanel>
-    </StackPanel>
-    </Grid>
+    </DockPanel>
+
+
 </Window>

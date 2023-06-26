@@ -51,11 +51,18 @@ namespace WPFTracker
 
             var todayMarker = DateTime.Now.ToString("d");
 
+            var skippedHeader = false;
+
             using (StreamReader reader = new StreamReader(TrackingFilePath))
             {
                 string? line;
                 while ((line = reader.ReadLine()) != null)
                 {
+                    if (!skippedHeader)
+                    {
+                        skippedHeader = true;
+                        continue;
+                    }
                     totalApps++;
 
                     if (line.StartsWith(todayMarker))

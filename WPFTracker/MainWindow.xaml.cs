@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hardcodet.Wpf.TaskbarNotification;
+using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using WPFTracker.Controls;
@@ -10,13 +12,51 @@ namespace WPFTracker
     /// </summary>
     public partial class MainWindow : Window
     {
+        private TaskbarIcon taskbarIcon;
+        private void InitializeTaskbarIcon()
+        {
+            taskbarIcon = new TaskbarIcon();
+            taskbarIcon.Icon = new System.Drawing.Icon(@"Assets\Icon.ico");
 
+
+            // Add event handler for left-click on the system tray icon to restore the window
+            taskbarIcon.TrayLeftMouseUp += (sender, e) =>
+            {
+                Show();
+                WindowState = WindowState.Normal;
+                taskbarIcon.Visibility = Visibility.Collapsed;
+            };
+
+
+
+            // Add a context menu for the system tray icon
+            var contextMenu = new System.Windows.Controls.ContextMenu();
+            var menuItem = new System.Windows.Controls.MenuItem();
+            menuItem.Header = "Exit";
+            menuItem.Click += (sender, e) =>
+            {
+                // Perform any cleanup or save operations if needed
+                System.Windows.Application.Current.Shutdown();
+            };
+            contextMenu.Items.Add(menuItem);
+
+            taskbarIcon.TrayPopup = contextMenu;
+
+            //contextMenu.Placement = PlacementMode.Bottom;
+            //contextMenu.PlacementTarget = taskbarIcon;
+
+            taskbarIcon.Visibility = Visibility.Visible;
+        }
 
         public MainWindow()
         {
             InitializeComponent();
+            InitializeTaskbarIcon();
 
-            //DataContext = PersistentTracker.Instance;
+            ShowInTaskbar = false;
+
+            this.DataContext = new MainWindowViewModel();
+            this.DataContextChanged += MainWindow_DataContextChanged;
 
             // Set the window startup location to manual
             this.WindowStartupLocation = WindowStartupLocation.Manual;
@@ -32,6 +72,11 @@ namespace WPFTracker
 
             // Set the window size to match the size of the content
             this.SizeToContent = SizeToContent.WidthAndHeight;
+        }
+
+        private void MainWindow_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Debugger.Break();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
