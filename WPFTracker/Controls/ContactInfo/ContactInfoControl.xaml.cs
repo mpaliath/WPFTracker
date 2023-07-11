@@ -6,25 +6,25 @@ using System.Windows.Input;
 namespace WPFTracker.Controls
 {
 
-    public class PopupClosedEventArgs : EventArgs
+    public class ContactPopupClosedEventArgs : EventArgs
     {
-        internal PopupClosedEventArgs(string company, string appLink)
+        internal ContactPopupClosedEventArgs(string name, string company)
         {
             Company = company;
-            AppLink = appLink;
+            Name = name;
         }
 
         public string Company { get; internal set; }
-        public string AppLink { get; internal set; }
+        public string Name { get; internal set; }
     }
 
 
     /// <summary>
     /// Interaction logic for AppInfo.xaml
     /// </summary>
-    public partial class AppInfoControl : UserControl
+    public partial class ContactInfoControl : UserControl
     {
-        public AppInfoControl()
+        public ContactInfoControl()
         {
             InitializeComponent();
         }
@@ -37,16 +37,16 @@ namespace WPFTracker.Controls
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             // Close the popup
-            ClosePopup(new PopupClosedEventArgs(CompanyTextBox.Text, AppLinkTextBox.Text));
+            ClosePopup(new ContactPopupClosedEventArgs(NameTextBox.Text, CompanyTextBox.Text));
             CompanyTextBox.Text = "";
-            AppLinkTextBox.Text = string.Empty;
+            NameTextBox.Text = string.Empty;
         }
 
         private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape
                 && string.IsNullOrEmpty(CompanyTextBox.Text)
-                && string.IsNullOrEmpty(AppLinkTextBox.Text))
+                && string.IsNullOrEmpty(NameTextBox.Text))
             {
                 ClosePopup(EventArgs.Empty);
             }
@@ -64,10 +64,9 @@ namespace WPFTracker.Controls
 
         private void InputPopup_Opened(object sender, EventArgs e)
         {
-            CompanyTextBox.Focus(); // Set focus to the TextBox
+            NameTextBox.Focus(); // Set focus to the TextBox
         }
 
         public event EventHandler<EventArgs>? OnPopupClosed;
-
     }
 }

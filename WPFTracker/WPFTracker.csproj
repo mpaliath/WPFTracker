@@ -14,6 +14,16 @@
 
   <ItemGroup>
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
+    <PackageReference Include="Octokit" Version="7.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\ContactInfo\ContactInfoControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\VendorsList\VendorsList.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

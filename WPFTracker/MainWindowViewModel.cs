@@ -19,7 +19,7 @@ namespace WPFTracker
             ShowBadge = Visibility.Visible;
         }
 
-        private Visibility _showBadge = Visibility.Hidden;
+        private Visibility _showBadge = Visibility.Collapsed;
         public Visibility ShowBadge
         {
             get { return _showBadge; }
@@ -41,5 +41,7 @@ namespace WPFTracker
         {
             get { return PersistentTracker.Instance; }
         }
+
+
     }
 }
