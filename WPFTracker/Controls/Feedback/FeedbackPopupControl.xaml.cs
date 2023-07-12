@@ -9,11 +9,11 @@ namespace WPFTracker.Controls
     /// <summary>
     /// Interaction logic for Feedback.xaml
     /// </summary>
-    public partial class Feedback : UserControl
+    public partial class FeedbackPopupControl : UserControl
     {
 
         private string token = "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";
-        public Feedback()
+        public FeedbackPopupControl()
         {
             InitializeComponent();
         }
@@ -25,9 +25,8 @@ namespace WPFTracker.Controls
 
         internal void OpenPopup()
         {
-            var hintText = "Enter Issue Details...";
             FeedbackPopup.IsOpen = true;
-            IssueDetails.Text = hintText;
+            IssueTitle.Focus();
 
         }
 
@@ -37,7 +36,15 @@ namespace WPFTracker.Controls
             var client = new GitHubClient(new ProductHeaderValue("WPFTracker"));
             client.Credentials = new Credentials(token);
 
-            var newIssue = new NewIssue(DateTime.Now.ToLocalTime().ToString("g"))
+            if (IssueTitle.Text == "" || IssueDetails.Text == "")
+            {
+                MessageBox.Show("Please enter the required fields",
+                    "Warning",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
+            }
+
+            var newIssue = new NewIssue(IssueTitle.Text)
             {
                 Body = IssueDetails.Text
             };

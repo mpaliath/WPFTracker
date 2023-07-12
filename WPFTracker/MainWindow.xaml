@@ -33,7 +33,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <localcontrols:AppInfoControl x:Name="AppInfoPopup" Grid.ColumnSpan="3" Grid.Column="0" Grid.RowSpan="3"/>
-                <localcontrols:Feedback x:Name="FeedbackPopup" Width="1" Grid.ColumnSpan="3" Grid.Column="0" Grid.RowSpan="3"  />
+                <localcontrols:FeedbackPopupControl x:Name="FeedbackPopup" Width="1" Grid.ColumnSpan="3" Grid.Column="0" Grid.RowSpan="3"  />
                 <localcontrols:AppsList x:Name="ListPopup" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1"/>
                 <localcontrols:ContactInfoControl x:Name="ContactInfoPopup" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1"/>
                 <localcontrols:VendorsList x:Name="VendorsPopup"  Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1"/>
