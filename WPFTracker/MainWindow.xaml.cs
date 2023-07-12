@@ -39,8 +39,12 @@ namespace WPFTracker
             menuItem1.Header = "Exit";
             menuItem1.Click += (sender, e) =>
             {
+                popup.IsOpen = false;
                 // Perform any cleanup or save operations if needed
-                System.Windows.Application.Current.Shutdown();
+                Application.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    Application.Current.Shutdown();
+                });
             };
             stackPanel.Children.Add(menuItem1);
 
@@ -192,6 +196,17 @@ namespace WPFTracker
             {
                 VendorsPopup.OpenPopup();
             }
+        }
+
+        private void Window_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ContextMenu contextMenu = (ContextMenu)Resources["ContextMenu"];
+            contextMenu.IsOpen = true;
+        }
+
+        private void Quit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 

@@ -12,12 +12,18 @@
         Title="MainWindow"
         SizeToContent="WidthAndHeight"
          WindowStyle="SingleBorderWindow" AllowsTransparency="True" Background="White"
-        PreviewKeyDown="Window_PreviewKeyDown">
+        PreviewKeyDown="Window_PreviewKeyDown" MouseRightButtonDown="Window_MouseRightButtonDown">
 
 
     <Window.Resources>
         <utils:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <ContextMenu x:Key="ContextMenu" Placement="MousePoint">
+            <MenuItem Header="Quit" Click="Quit_Click"/>
+        </ContextMenu>
     </Window.Resources>
+    <Window.ContextMenu>
+        <StaticResourceExtension ResourceKey="ContextMenu"/>
+    </Window.ContextMenu>
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Right">
             <Grid>
