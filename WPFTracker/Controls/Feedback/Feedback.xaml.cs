@@ -12,7 +12,7 @@ namespace WPFTracker.Controls
     public partial class Feedback : UserControl
     {
 
-        private string token = "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";
+        private string token = "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";
         public Feedback()
         {
             InitializeComponent();
