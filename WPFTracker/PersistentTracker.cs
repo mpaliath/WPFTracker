@@ -69,14 +69,22 @@ namespace WPFTracker
 
         private PersistentTracker()
         {
+            Vendors = new ObservableCollection<VendorDetails>();
+
+            Jobs = new ObservableCollection<JobApplication>();
+
+            RefreshTracker();
+        }
+
+        public void RefreshTracker()
+        {
             filedTodayCount = 0;
             filedAppsCount = 0;
             contactsToday = 0;
             totalContacts = 0;
 
-            Vendors = new ObservableCollection<VendorDetails>();
-
-            Jobs = new ObservableCollection<JobApplication>();
+            Vendors.Clear();
+            Jobs.Clear();
 
             CacheTrackingInfo();
             UpdateProps();

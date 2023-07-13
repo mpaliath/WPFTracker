@@ -1,6 +1,7 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
 using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -18,11 +19,30 @@ namespace WPFTracker
         private TaskbarIcon taskbarIcon;
         private MainWindowViewModel viewModel;
 
+        private TimeSpan GetTimeUntilMidnight()
+        {
+            DateTime now = DateTime.Now;
+            DateTime midnight = now.Date.AddDays(1); // Next midnight
+            TimeSpan timeUntilMidnight = midnight - now;
 
+            return timeUntilMidnight;
+        }
+
+        private void SetupTimer()
+        {
+            TimeSpan timeUntilMidnight = GetTimeUntilMidnight();
+
+            Timer timer = new Timer(_ =>
+            {
+                PersistentTracker.Instance.RefreshTracker();
+                SetupTimer(); // Set up the timer again for the next midnight
+            }, null, timeUntilMidnight, Timeout.InfiniteTimeSpan);
+        }
 
         public MainWindow()
         {
             InitializeComponent();
+            SetupTimer();
 
             ShowInTaskbar = false;
 
