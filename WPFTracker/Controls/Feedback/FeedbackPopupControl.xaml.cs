@@ -30,6 +30,11 @@ namespace WPFTracker.Controls
 
         }
 
+        internal void ClosePopup()
+        {
+            FeedbackPopup.IsOpen = false;
+        }
+
 
         private async void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {

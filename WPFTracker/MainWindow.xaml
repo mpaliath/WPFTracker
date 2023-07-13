@@ -18,6 +18,7 @@
     <Window.Resources>
         <utils:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <ContextMenu x:Key="ContextMenu" Placement="MousePoint">
+            <MenuItem Header="Minimize" Click="Minimize_Click"/>
             <MenuItem Header="Quit" Click="Quit_Click"/>
         </ContextMenu>
     </Window.Resources>

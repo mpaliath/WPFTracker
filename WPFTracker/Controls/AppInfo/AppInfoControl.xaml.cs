@@ -48,7 +48,7 @@ namespace WPFTracker.Controls
                 && string.IsNullOrEmpty(CompanyTextBox.Text)
                 && string.IsNullOrEmpty(AppLinkTextBox.Text))
             {
-                ClosePopup(EventArgs.Empty);
+                ClosePopup(null);
             }
             else if (e.Key == Key.Enter)
             {
@@ -56,10 +56,14 @@ namespace WPFTracker.Controls
             }
         }
 
-        private void ClosePopup(EventArgs e)
+        public void ClosePopup(EventArgs? e)
         {
             InputPopup.IsOpen = false;
-            OnPopupClosed?.Invoke(this, e);
+
+            if (e != null)
+            {
+                OnPopupClosed?.Invoke(this, e);
+            }
         }
 
         private void InputPopup_Opened(object sender, EventArgs e)
