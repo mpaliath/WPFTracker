@@ -18,6 +18,7 @@ namespace WPFTracker
     {
         private TaskbarIcon taskbarIcon;
         private MainWindowViewModel viewModel;
+        private Timer resetTimer;
 
         private TimeSpan GetTimeUntilMidnight()
         {
@@ -32,7 +33,7 @@ namespace WPFTracker
         {
             TimeSpan timeUntilMidnight = GetTimeUntilMidnight();
 
-            Timer timer = new Timer(_ =>
+            resetTimer = new Timer(_ =>
             {
                 PersistentTracker.Instance.RefreshTracker();
                 SetupTimer(); // Set up the timer again for the next midnight

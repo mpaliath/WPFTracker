@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using WPFTracker.Data;
 
 namespace WPFTracker
@@ -67,27 +68,35 @@ namespace WPFTracker
             }
         }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         private PersistentTracker()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             Vendors = new ObservableCollection<VendorDetails>();
 
             Jobs = new ObservableCollection<JobApplication>();
 
+            // Capture the current SynchronizationContext
+#pragma warning disable CS8601 // Possible null reference assignment.
+            _syncContext = SynchronizationContext.Current;
+#pragma warning restore CS8601 // Possible null reference assignment.
+
             RefreshTracker();
         }
 
+        private SynchronizationContext _syncContext;
+
         public void RefreshTracker()
         {
-            filedTodayCount = 0;
-            filedAppsCount = 0;
-            contactsToday = 0;
-            totalContacts = 0;
+            // Use the SynchronizationContext to marshal the call to Vendors.Clear() to the main UI thread
+            _syncContext.Post(_ =>
+            {
+                Vendors.Clear();
+                Jobs.Clear();
 
-            Vendors.Clear();
-            Jobs.Clear();
-
-            CacheTrackingInfo();
-            UpdateProps();
+                CacheTrackingInfo();
+                UpdateProps();
+            }, null);
         }
 
         public static PersistentTracker Instance = new PersistentTracker();
