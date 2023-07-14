@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace WPFTracker.Controls
@@ -41,6 +43,12 @@ namespace WPFTracker.Controls
             {
                 ClosePopup();
             }
+        }
+
+        private void dataGrid_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ICollectionView dataView = CollectionViewSource.GetDefaultView(dataGrid.ItemsSource);
+            dataView.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
         }
     }
 }
