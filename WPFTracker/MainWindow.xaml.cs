@@ -159,12 +159,6 @@ namespace WPFTracker
             }
         }
 
-        private void StackPanel_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            ContextMenu contextMenu = (ContextMenu)Resources["ContextMenu"];
-            contextMenu.IsOpen = true;
-        }
-
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();

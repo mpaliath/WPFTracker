@@ -22,9 +22,6 @@
             <MenuItem Header="Quit" Click="Quit_Click"/>
         </ContextMenu>
     </Window.Resources>
-    <Window.ContextMenu>
-        <StaticResourceExtension ResourceKey="ContextMenu"/>
-    </Window.ContextMenu>
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Right">
             <Grid>
@@ -38,9 +35,8 @@
                 <localcontrols:AppsList x:Name="ListPopup" Grid.Row="3"/>
                 <localcontrols:ContactInfoControl x:Name="ContactInfoPopup" Grid.Row="3"/>
                 <localcontrols:VendorsList x:Name="VendorsPopup"  Grid.Row="3"/>
-                <StackPanel Grid.Column="0" Grid.Row="0"  MouseRightButtonDown="StackPanel_MouseRightButtonDown">
-                <Border BorderBrush="Black" BorderThickness="1,1,1,0">
-                    <StackPanel  Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+                <Border BorderBrush="Black" BorderThickness="1,1,1,0" Grid.Column="0" Grid.Row="0">
+                    <StackPanel ContextMenu="{StaticResource ContextMenu}" Orientation="Horizontal" >
                         <Grid Cursor="Hand" x:Name="AppsFiledTodayGrid" MouseLeftButtonDown="AppsFiledToday_OnMouseDown">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -70,10 +66,9 @@
                         </Viewbox>
                     </StackPanel>
                 </Border>
-                </StackPanel>
-                <StackPanel Grid.Column="0" Grid.Row="1"  MouseRightButtonDown="StackPanel_MouseRightButtonDown">
-                <Border BorderBrush="Black" BorderThickness="1" >
-                    <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
+
+                <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="1">
+                    <StackPanel ContextMenu="{StaticResource ContextMenu}" Orientation="Horizontal">
                         <Grid Grid.Row ="1"  Cursor="Hand" x:Name="VendorsGrid" MouseLeftButtonDown="VendorsGrid_OnMouseDown">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -93,7 +88,6 @@
                         </Grid>
                     </StackPanel>
                 </Border>
-                </StackPanel >
             </Grid>
         </StackPanel>
     </DockPanel>
