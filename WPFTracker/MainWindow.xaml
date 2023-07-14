@@ -12,7 +12,7 @@
         Title="MainWindow"
         SizeToContent="WidthAndHeight"
          WindowStyle="SingleBorderWindow" AllowsTransparency="True" Background="White"
-        PreviewKeyDown="Window_PreviewKeyDown" MouseRightButtonDown="Window_MouseRightButtonDown">
+        PreviewKeyDown="Window_PreviewKeyDown">
 
 
     <Window.Resources>
@@ -22,6 +22,9 @@
             <MenuItem Header="Quit" Click="Quit_Click"/>
         </ContextMenu>
     </Window.Resources>
+    <Window.ContextMenu>
+        <StaticResourceExtension ResourceKey="ContextMenu"/>
+    </Window.ContextMenu>
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Right">
             <Grid>
@@ -35,7 +38,7 @@
                 <localcontrols:AppsList x:Name="ListPopup" Grid.Row="3"/>
                 <localcontrols:ContactInfoControl x:Name="ContactInfoPopup" Grid.Row="3"/>
                 <localcontrols:VendorsList x:Name="VendorsPopup"  Grid.Row="3"/>
-                <StackPanel ContextMenu="{StaticResource ContextMenu}" Grid.Column="0" Grid.Row="0">
+                <StackPanel Grid.Column="0" Grid.Row="0"  MouseRightButtonDown="StackPanel_MouseRightButtonDown">
                 <Border BorderBrush="Black" BorderThickness="1,1,1,0">
                     <StackPanel  Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
                         <Grid Cursor="Hand" x:Name="AppsFiledTodayGrid" MouseLeftButtonDown="AppsFiledToday_OnMouseDown">
@@ -68,7 +71,7 @@
                     </StackPanel>
                 </Border>
                 </StackPanel>
-                <StackPanel ContextMenu="{StaticResource ContextMenu}" Grid.Column="0" Grid.Row="1">
+                <StackPanel Grid.Column="0" Grid.Row="1"  MouseRightButtonDown="StackPanel_MouseRightButtonDown">
                 <Border BorderBrush="Black" BorderThickness="1" >
                     <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
                         <Grid Grid.Row ="1"  Cursor="Hand" x:Name="VendorsGrid" MouseLeftButtonDown="VendorsGrid_OnMouseDown">
@@ -90,7 +93,7 @@
                         </Grid>
                     </StackPanel>
                 </Border>
-                </StackPanel>
+                </StackPanel >
             </Grid>
         </StackPanel>
     </DockPanel>
