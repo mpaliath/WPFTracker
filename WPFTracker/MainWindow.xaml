@@ -13,8 +13,6 @@
         SizeToContent="WidthAndHeight"
          WindowStyle="SingleBorderWindow" AllowsTransparency="True" Background="White"
         PreviewKeyDown="Window_PreviewKeyDown">
-
-
     <Window.Resources>
         <utils:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <ContextMenu x:Key="ContextMenu" Placement="MousePoint">

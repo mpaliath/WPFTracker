@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace WPFTracker.Controls
 {
@@ -70,6 +71,15 @@ namespace WPFTracker.Controls
                 MessageBoxImage.Information);
 
             FeedbackPopup.IsOpen = false;
+        }
+
+        private void FeedbackPopup_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape && FeedbackPopup.IsOpen == true)
+
+            {
+                ClosePopup();
+            }
         }
     }
 }
