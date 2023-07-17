@@ -19,11 +19,20 @@
             <MenuItem Header="Minimize" Click="Minimize_Click"/>
             <MenuItem Header="Quit" Click="Quit_Click"/>
         </ContextMenu>
+        <Style x:Key="Count" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Right" />
+            <Setter Property="Margin" Value="0,0,5,0"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+        </Style>
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Right">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition MinHeight="0"/>
                     <RowDefinition Height="38" />
                     <RowDefinition Height="37" />
                     <RowDefinition Height="*" />
@@ -33,59 +42,62 @@
                 <localcontrols:AppsList x:Name="ListPopup" Grid.Row="3"/>
                 <localcontrols:ContactInfoControl x:Name="ContactInfoPopup" Grid.Row="3"/>
                 <localcontrols:VendorsList x:Name="VendorsPopup"  Grid.Row="3"/>
-                <Border BorderBrush="Black" BorderThickness="1,1,1,0" Grid.Column="0" Grid.Row="0">
-                    <StackPanel ContextMenu="{StaticResource ContextMenu}" Orientation="Horizontal" >
+                <Border BorderBrush="Black" BorderThickness="1,1,1,0" Grid.Column="0" Grid.Row="1" Margin="0,0,0,0">
+                    <StackPanel ContextMenu="{StaticResource ContextMenu}" Orientation="Horizontal" Margin="5, 0,0,0">
                         <Grid Cursor="Hand" x:Name="AppsFiledTodayGrid" MouseLeftButtonDown="AppsFiledToday_OnMouseDown">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="200" />
                                 <ColumnDefinition Width="40" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Apps Filed Today:"/></TextBlock>
-                            <TextBlock Grid.Column="1" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Red" Text="{Binding Tracker.FiledTodayCount}" IsHitTestVisible="True" />
+                            <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Apps Filed Today"/></TextBlock>
+                            <TextBlock Grid.Column="1" Style="{StaticResource Count}" Foreground="Red" Text="{Binding Tracker.FiledTodayCount, FallbackValue=0}" IsHitTestVisible="True" />
                         </Grid>
 
                         <Border x:Name="BadgeBorder" BorderBrush="Black" BorderThickness="1,0,0,0" Margin="0,0,10,0"/>
                         <Grid Cursor="Hand" x:Name="AppsFiledGrid" MouseLeftButtonDown="AppsFiled_OnMouseDown">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="170" />
                                 <ColumnDefinition Width="40" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Apps Filed:"/></TextBlock>
-                            <TextBlock Grid.Column="1" Margin="0,0,5,10" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black" Text="{Binding Tracker.FiledAppsCount}" IsHitTestVisible="True" />
+                            <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Apps Filed"/></TextBlock>
+                            <TextBlock Grid.Column="1" Style="{StaticResource Count}" Foreground="Black" Text="{Binding Tracker.FiledAppsCount, FallbackValue=0}" IsHitTestVisible="True" />
                         </Grid>
 
 
 
-                        <Viewbox Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,5">
-                            <Grid Width="20" Height="20" Visibility="{Binding ShowBadge}">
-                                <Ellipse Fill="Red" Stroke="White" StrokeThickness="2" />
-                                <TextBlock Text="!" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" />
-                            </Grid>
-                        </Viewbox>
+
                     </StackPanel>
                 </Border>
-
-                <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="1">
-                    <StackPanel ContextMenu="{StaticResource ContextMenu}" Orientation="Horizontal">
+                <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="2" Margin="0,0,0,0">
+                    <StackPanel ContextMenu="{StaticResource ContextMenu}" Orientation="Horizontal" Margin="5, 0,0,0">
                         <Grid Grid.Row ="1"  Cursor="Hand" x:Name="VendorsGrid" MouseLeftButtonDown="VendorsGrid_OnMouseDown">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="200" />
                                 <ColumnDefinition Width="40" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black" Padding="0,0,20,0"><Run Text="Contacts Today:" /></TextBlock>
-                            <TextBlock Grid.Column="1" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Red" Text="{Binding Tracker.ContactsToday}" IsHitTestVisible="True" />
+                            <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black" Padding="0,0,20,0"><Run Text="Contacts Today" /></TextBlock>
+                            <TextBlock Grid.Column="1" Style="{StaticResource Count}" Foreground="Red" Text="{Binding Tracker.ContactsToday, FallbackValue=0}" IsHitTestVisible="True" />
                         </Grid>
                         <Border x:Name="BadgeBorder1" BorderBrush="Black" BorderThickness="1,0,0,0" Margin="0,0,10,0"/>
                         <Grid Cursor="Hand" x:Name="TotalVendorsGrid" MouseLeftButtonDown="TotalVendorsGrid_OnMouseDown">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="170" />
                                 <ColumnDefinition Width="40" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Total Contacts:"/></TextBlock>
-                            <TextBlock Grid.Column="1" Margin="0,0,5,10" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black" Text="{Binding Tracker.TotalContacts}" IsHitTestVisible="True" />
+                            <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Total Contacts"/></TextBlock>
+                            <TextBlock Grid.Column="1" Style="{StaticResource Count}" Foreground="Black" Text="{Binding Tracker.TotalContacts, FallbackValue=0}" IsHitTestVisible="True" />
                         </Grid>
                     </StackPanel>
                 </Border>
+
+                <Grid Grid.Row="0" Background="Transparent" Visibility="{Binding ShowBadge}"> <!--{Binding ShowBadge}-->
+                    <Viewbox Height="40" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Width="40">
+                        <Grid Width="20" >
+                            <Ellipse Fill="Red" Stroke="White" StrokeThickness="2" />
+                            <TextBlock Text="!" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" />
+                        </Grid>
+                    </Viewbox>
+                </Grid>
             </Grid>
         </StackPanel>
     </DockPanel>
