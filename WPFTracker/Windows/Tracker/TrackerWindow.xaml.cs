@@ -8,7 +8,10 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using WPFTracker.Controls;
+using WPFTracker.Utilities;
 using WPFTracker.ViewModels;
+using WPFTracker.Windows.Timer;
+using SystemTimer = System.Threading.Timer;
 
 namespace WPFTracker.Windows
 {
@@ -19,7 +22,7 @@ namespace WPFTracker.Windows
     {
         private TaskbarIcon taskbarIcon;
         private TrackerWindowViewModel viewModel;
-        private Timer resetTimer;
+        private SystemTimer resetTimer;
 
         private TimeSpan GetTimeUntilMidnight()
         {
@@ -34,7 +37,7 @@ namespace WPFTracker.Windows
         {
             TimeSpan timeUntilMidnight = GetTimeUntilMidnight();
 
-            resetTimer = new Timer(_ =>
+            resetTimer = new SystemTimer(_ =>
             {
                 PersistentTracker.Instance.RefreshTracker();
                 SetupTimer(); // Set up the timer again for the next midnight
@@ -266,7 +269,8 @@ namespace WPFTracker.Windows
 
         private void SwitchModes_Click(object sender, RoutedEventArgs e)
         {
-
+            var window = new TimedActivityWindow();
+            WindowSwitcher.SwitchToWindow(this, window);
         }
     }
 
