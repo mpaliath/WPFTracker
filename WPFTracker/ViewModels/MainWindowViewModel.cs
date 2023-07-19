@@ -5,14 +5,14 @@ using System.Threading;
 using System.Windows;
 using WPFTracker.Utilities;
 
-namespace WPFTracker
+namespace WPFTracker.ViewModels
 {
-    internal class MainWindowViewModel : INotifyPropertyChanged
+    internal class TrackerWindowViewModel : INotifyPropertyChanged
     {
-        public static MainWindowViewModel Instance = new MainWindowViewModel();
+        public static TrackerWindowViewModel Instance = new TrackerWindowViewModel();
         private Timer timer;
         private bool testBadge = false;
-        public MainWindowViewModel()
+        public TrackerWindowViewModel()
         {
             Logger.Instance.ExceptionLogged += OnExceptionLogged;
 

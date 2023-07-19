@@ -26,6 +26,10 @@
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Windows\Timer\" />
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="mkdir &quot;$(OutputPath)\Assets&quot;&#xD;&#xA;copy &quot;$(SolutionDir)\Icon.ico&quot; &quot;$(OutputPath)\Assets\&quot;" />
   </Target>

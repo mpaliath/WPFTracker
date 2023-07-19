@@ -1,14 +1,13 @@
-﻿<Window x:Class="WPFTracker.MainWindow"
+﻿<Window x:Class="WPFTracker.Windows.TrackerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:localcontrols="clr-namespace:WPFTracker.Controls" 
-        xmlns:wpftracker="clr-namespace:WPFTracker"
-        xmlns:local="clr-namespace:WPFTracker"
+        xmlns:viewModels="clr-namespace:WPFTracker.ViewModels"
         xmlns:utils="clr-namespace:WPFTracker.Utilities"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DataContext="{d:DesignInstance Type=wpftracker:MainWindowViewModel}"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DataContext="{d:DesignInstance Type=viewModels:TrackerWindowViewModel}"
         mc:Ignorable="d"
-        DataContext="{x:Static wpftracker:MainWindowViewModel.Instance}"
+        DataContext="{x:Static viewModels:TrackerWindowViewModel.Instance}"
         Title="MainWindow"
         SizeToContent="WidthAndHeight"
          WindowStyle="SingleBorderWindow" AllowsTransparency="True" Background="Transparent"
@@ -17,6 +16,7 @@
         <utils:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <ContextMenu x:Key="ContextMenu" Placement="MousePoint">
             <MenuItem Header="Minimize" Click="Minimize_Click"/>
+            <MenuItem Header="Switch Modes" Click="SwitchModes_Click" />
             <MenuItem Header="Quit" Click="Quit_Click"/>
         </ContextMenu>
         <Style x:Key="Count" TargetType="TextBlock">

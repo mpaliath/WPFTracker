@@ -8,16 +8,17 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using WPFTracker.Controls;
+using WPFTracker.ViewModels;
 
-namespace WPFTracker
+namespace WPFTracker.Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class TrackerWindow : Window
     {
         private TaskbarIcon taskbarIcon;
-        private MainWindowViewModel viewModel;
+        private TrackerWindowViewModel viewModel;
         private Timer resetTimer;
 
         private TimeSpan GetTimeUntilMidnight()
@@ -40,7 +41,7 @@ namespace WPFTracker
             }, null, timeUntilMidnight, Timeout.InfiniteTimeSpan);
         }
 
-        public MainWindow()
+        public TrackerWindow()
         {
             InitializeComponent();
             SetupTimer();
@@ -48,7 +49,7 @@ namespace WPFTracker
             ShowInTaskbar = false;
 
 
-            this.viewModel = new MainWindowViewModel();
+            this.viewModel = new TrackerWindowViewModel();
             this.DataContext = this.viewModel;
             this.DataContextChanged += MainWindow_DataContextChanged;
 
@@ -245,7 +246,7 @@ namespace WPFTracker
         private void Minimize_Click(object sender, RoutedEventArgs e)
         {
             // Get the reference to the main window
-            var mainWindow = Application.Current.MainWindow as MainWindow;
+            var mainWindow = Application.Current.MainWindow as TrackerWindow;
 
             // Minimize the window
             if (mainWindow != null)
@@ -261,6 +262,11 @@ namespace WPFTracker
 
                 mainWindow.Hide();
             }
+        }
+
+        private void SwitchModes_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 
