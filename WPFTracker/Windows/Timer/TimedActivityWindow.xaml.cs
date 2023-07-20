@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -14,6 +15,8 @@ namespace WPFTracker.Windows.Timer
     {
         private TimeSpan remainingTime = TimeSpan.Zero;
         private DispatcherTimer timer = new DispatcherTimer();
+        private bool isTimerCountingDown = true;
+
         public TimedActivityWindow()
         {
             InitializeComponent();
@@ -72,53 +75,84 @@ namespace WPFTracker.Windows.Timer
 
         private void StartTimer_Click(object sender, RoutedEventArgs e)
         {
-            if (TimerOptionsComboBox.SelectedItem is ComboBoxItem selectedItem && int.TryParse(selectedItem.Content.ToString(), out int minutes))
+            if (!isTimerCountingDown)
             {
-                // Start the timer with the selected minutes
-                remainingTime = TimeSpan.FromMinutes(minutes);
-                UpdateTimeLeft();
-                timer.Start();
-
+                timer.Stop();
+                isTimerCountingDown = true;
                 TimerAction.Content = "Restart Timer";
             }
             else
             {
-                MessageBox.Show("Please select a valid timer duration.");
+                if (TimerOptionsComboBox.SelectedItem is ComboBoxItem selectedItem && int.TryParse(selectedItem.Content.ToString(), out int minutes))
+                {
+                    // Start the timer with the selected minutes
+                    remainingTime = TimeSpan.FromMinutes(minutes);
+                    UpdateTimeLeft();
+                    timer.Start();
+
+                    TimerAction.Content = "Restart Timer";
+                }
+                else
+                {
+                    MessageBox.Show("Please select a valid timer duration.");
+                }
             }
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (remainingTime.TotalSeconds > 0)
+            if (isTimerCountingDown)
             {
-                remainingTime = remainingTime.Subtract(TimeSpan.FromSeconds(1));
-                UpdateTimeLeft();
+                if (remainingTime.TotalSeconds > 0)
+                {
+                    if (remainingTime.TotalSeconds == 120)
+                    {
+                        SoundPlayer player = new SoundPlayer(Sounds.Notify);
+                        player.Play();
+                    }
+
+                    remainingTime = remainingTime.Subtract(TimeSpan.FromSeconds(1));
+                    UpdateTimeLeft();
+                }
+                else
+                {
+                    isTimerCountingDown = false;
+                    TimerAction.Content = "Stop Timer";
+                    SoundPlayer player = new SoundPlayer(Sounds.Tada);
+                    player.Play();
+                }
             }
             else
             {
-                timer.Stop();
-                MessageBox.Show("Timer completed.");
+                remainingTime = remainingTime.Add(TimeSpan.FromSeconds(1));
+                UpdateTimeLeft();
             }
         }
 
+        Brush currentBrush = Brushes.Black;
         private void UpdateTimeLeft()
         {
-            if (TimerOptionsComboBox.SelectedItem is ComboBoxItem selectedItem && int.TryParse(selectedItem.Content.ToString(), out int minutes))
+            if (!isTimerCountingDown)
             {
-                if (remainingTime.TotalMinutes == minutes)
+                currentBrush = Brushes.DarkRed;
+            }
+            else if (TimerOptionsComboBox.SelectedItem is ComboBoxItem selectedItem && int.TryParse(selectedItem.Content.ToString(), out int minutes))
+            {
+                if (remainingTime.TotalMinutes == minutes && currentBrush != Brushes.DarkGreen)
                 {
-                    TimeLeftTextBlock.Foreground = Brushes.Green;
+                    currentBrush = Brushes.DarkGreen;
                 }
-                else if (remainingTime.TotalMinutes <= minutes / 2)
+                else if (remainingTime.TotalMinutes <= minutes / 2 && currentBrush != Brushes.LightGreen)
                 {
-                    TimeLeftTextBlock.Foreground = Brushes.Yellow;
+                    currentBrush = Brushes.LightGreen;
                 }
 
-                else if (remainingTime.TotalMinutes <= 2)
+                else if (remainingTime.TotalMinutes <= 2 && currentBrush != Brushes.Red)
                 {
-                    TimeLeftTextBlock.Foreground = Brushes.Red;
+                    currentBrush = Brushes.Red;
                 }
             }
+            TimeLeftTextBlock.Foreground = currentBrush;
             TimeLeftTextBlock.Text = remainingTime.ToString();
         }
 
