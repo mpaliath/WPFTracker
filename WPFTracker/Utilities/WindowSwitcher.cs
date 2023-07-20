@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using WPFTracker.Windows.Timer;
 
 namespace WPFTracker.Utilities
 {
@@ -12,6 +13,9 @@ namespace WPFTracker.Utilities
             }
 
             targetWindow.Show();
+
+            App.AppSettings.ShouldSwitchMode = targetWindow is TimedActivityWindow;
+            App.AppSettings.Save();
         }
     }
 }
