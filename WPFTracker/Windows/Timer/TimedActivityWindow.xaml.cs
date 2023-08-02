@@ -2,6 +2,7 @@
 using System.Media;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using WPFTracker.Utilities;
@@ -15,7 +16,7 @@ namespace WPFTracker.Windows.Timer
     {
         private TimeSpan remainingTime = TimeSpan.Zero;
         private DispatcherTimer timer = new DispatcherTimer();
-        private bool isTimerCountingDown = true;
+        private bool isTimerCountingDown = false;
 
         public TimedActivityWindow()
         {
@@ -75,26 +76,41 @@ namespace WPFTracker.Windows.Timer
 
         private void StartTimer_Click(object sender, RoutedEventArgs e)
         {
+            var newContent = shouldRestart ? "Restart Timer" : "Stop Timer";
             if (!isTimerCountingDown)
-            {
-                timer.Stop();
-                isTimerCountingDown = true;
-                TimerAction.Content = "Restart Timer";
-            }
-            else
             {
                 if (TimerOptionsComboBox.SelectedItem is ComboBoxItem selectedItem && int.TryParse(selectedItem.Content.ToString(), out int minutes))
                 {
-                    // Start the timer with the selected minutes
                     remainingTime = TimeSpan.FromMinutes(minutes);
                     UpdateTimeLeft();
-                    timer.Start();
+                }
+                timer.Start();
+                isTimerCountingDown = true;
+                TimerAction.Content = newContent;
+            }
+            else
+            {
+                if (shouldRestart)
+                {
+                    if (TimerOptionsComboBox.SelectedItem is ComboBoxItem selectedItem && int.TryParse(selectedItem.Content.ToString(), out int minutes))
+                    {
+                        // Start the timer with the selected minutes
+                        remainingTime = TimeSpan.FromMinutes(minutes);
+                        UpdateTimeLeft();
+                        timer.Start();
 
-                    TimerAction.Content = "Restart Timer";
+                        TimerAction.Content = "Restart Timer";
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please select a valid timer duration.");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Please select a valid timer duration.");
+                    isTimerCountingDown = false;
+                    timer.Stop();
+                    TimerAction.Content = "Restart Timer";
                 }
             }
         }
@@ -174,6 +190,33 @@ namespace WPFTracker.Windows.Timer
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                SetActionToRestart(true);
+            }
+        }
+
+        private bool shouldRestart = false;
+        private void SetActionToRestart(bool shouldRestart)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                TimerAction.Content = "Restart Timer";
+                shouldRestart = true;
+            });
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                TimerAction.Content = "Stop Timer";
+                shouldRestart = false;
+            });
         }
     }
 }

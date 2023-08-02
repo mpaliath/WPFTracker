@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="TimedActivityWindow" SizeToContent="WidthAndHeight"
-         WindowStyle="SingleBorderWindow" AllowsTransparency="True" Background="White" d:DesignHeight="107.902" d:DesignWidth="363.328">
+         WindowStyle="SingleBorderWindow" AllowsTransparency="True" Background="White" d:DesignHeight="107.902" d:DesignWidth="363.328" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
+        >
     <Window.Resources>
         <ContextMenu x:Key="ContextMenu" Placement="MousePoint">
             <MenuItem Header="Switch Modes" Click="SwitchModes_Click" />
