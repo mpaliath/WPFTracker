@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using WPFTracker.Controls.TrackerTaskbarIcon;
 using WPFTracker.Utilities;
 
 namespace WPFTracker.Windows.Timer
@@ -217,6 +218,21 @@ namespace WPFTracker.Windows.Timer
                 TimerAction.Content = "Stop Timer";
                 shouldRestart = false;
             });
+        }
+
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            // Get the reference to the main window
+            var mainWindow = Application.Current.MainWindow as TimedActivityWindow;
+
+            // Minimize the window
+            if (mainWindow != null)
+            {
+                TrackerTaskbarIcon.Instance.Initialize();
+
+                mainWindow.Hide();
+            }
+
         }
     }
 }
