@@ -1,18 +1,16 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 using WPFTracker.Utilities;
 
 namespace WPFTracker.ViewModels
 {
-    internal class TrackerWindowViewModel : INotifyPropertyChanged
+    internal class TrackerWindowViewModel : CollapsibleControlModel
     {
         public static TrackerWindowViewModel Instance = new TrackerWindowViewModel();
         private Timer timer;
         private bool testBadge = false;
-        public TrackerWindowViewModel()
+        public TrackerWindowViewModel() : base(new GridLength(1, GridUnitType.Star))
         {
             Logger.Instance.ExceptionLogged += OnExceptionLogged;
 
@@ -37,13 +35,6 @@ namespace WPFTracker.ViewModels
                 _showBadge = value;
                 OnPropertyChanged("ShowBadge");
             }
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public PersistentTracker Tracker

@@ -5,26 +5,26 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using WPFTracker.Controls;
 using WPFTracker.Utilities;
+using WPFTracker.ViewModels;
 
 namespace WPFTracker.Windows.Timer
 {
     /// <summary>
     /// Interaction logic for TimedActivityControl.xaml
     /// </summary>
-    public partial class TimedActivityControl : UserControl
+    public partial class TimedActivityControl : CollapsibleControl
     {
         private TimeSpan remainingTime = TimeSpan.Zero;
         private DispatcherTimer timer = new DispatcherTimer();
         private bool isTimerCountingDown = false;
 
-        public TimedActivityControl()
+        public TimedActivityControl() : base(new CollapsibleControlModel(new GridLength(1, GridUnitType.Star)))
         {
             InitializeComponent();
-
             SetupTimer();
         }
-
 
 
 
@@ -171,6 +171,7 @@ namespace WPFTracker.Windows.Timer
         }
 
         private bool shouldRestart = false;
+
         private void SetActionToRestart(bool shouldRestart)
         {
             Dispatcher.Invoke(() =>

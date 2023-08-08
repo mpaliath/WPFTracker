@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using WPFTracker.Windows.Timer;
+using WPFTracker.Windows.Tracker;
 
 namespace WPFTracker.Utilities
 {
@@ -19,7 +20,7 @@ namespace WPFTracker.Utilities
             App.AppSettings.Save();
         }
 
-        public static void SwitchMode(UserControl trackerUserControl, UserControl timedActivityUserControl, ContentControl contentControl)
+        public static void SwitchMode(TrackerActivityControl trackerUserControl, TimedActivityControl timedActivityUserControl, ContentControl contentControl)
         {
             if (contentControl.Content is TimedActivityControl)
             {

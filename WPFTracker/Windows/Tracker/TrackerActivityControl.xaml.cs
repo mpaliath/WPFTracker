@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using WPFTracker.Controls;
 using WPFTracker.ViewModels;
@@ -14,11 +12,12 @@ namespace WPFTracker.Windows.Tracker
     /// <summary>
     /// Interaction logic for TrackerActivityControl.xaml
     /// </summary>
-    public partial class TrackerActivityControl : UserControl
+    public partial class TrackerActivityControl : CollapsibleControl
     {
 
         private TrackerWindowViewModel viewModel;
         private SystemTimer resetTimer;
+        private bool isCollapsed;
 
         private TimeSpan GetTimeUntilMidnight()
         {
@@ -40,15 +39,14 @@ namespace WPFTracker.Windows.Tracker
             }, null, timeUntilMidnight, Timeout.InfiniteTimeSpan);
         }
 
-        public TrackerActivityControl()
+        public TrackerActivityControl() : base(new TrackerWindowViewModel())
         {
             InitializeComponent();
             SetupTimer();
 
 
-            this.viewModel = new TrackerWindowViewModel();
-            this.DataContext = this.viewModel;
-            this.DataContextChanged += MainWindow_DataContextChanged;
+            this.viewModel = (TrackerWindowViewModel)this.DataContext;
+
 
             AppInfoPopup.OnPopupClosed += OnAppInfoPopupClosed;
             ContactInfoPopup.OnPopupClosed += ContactInfoPopup_OnPopupClosed;
@@ -56,11 +54,6 @@ namespace WPFTracker.Windows.Tracker
         }
 
 
-
-        private void MainWindow_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Debugger.Break();
-        }
 
         private void AppsFiledToday_OnMouseDown(object sender, MouseButtonEventArgs e)
         {

@@ -1,10 +1,11 @@
-﻿<UserControl x:Class="WPFTracker.Windows.Tracker.TrackerActivityControl"
+﻿<base:CollapsibleControl x:Class="WPFTracker.Windows.Tracker.TrackerActivityControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:localcontrols="clr-namespace:WPFTracker.Controls" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:WPFTracker.Windows.Tracker"
+             xmlns:base="clr-namespace:WPFTracker.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -37,20 +38,20 @@
                     <StackPanel Orientation="Horizontal" Margin="5, 0,0,0">
                         <Grid Cursor="Hand" x:Name="AppsFiledTodayGrid" MouseLeftButtonDown="AppsFiledToday_OnMouseDown">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="{Binding CollapsibleColumnWidth}" />
+                                <ColumnDefinition MaxWidth="40" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Apps Filed Today"/></TextBlock>
+                            <TextBlock Grid.Column="0" Margin="0,0,20,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black" HorizontalAlignment="Center"><Run Text="Apps Filed Today"/></TextBlock>
                             <TextBlock Grid.Column="1" Style="{StaticResource Count}" Foreground="Red" Text="{Binding Tracker.FiledTodayCount, FallbackValue=0}" IsHitTestVisible="True" />
                         </Grid>
 
                         <Border x:Name="BadgeBorder" BorderBrush="Black" BorderThickness="1,0,0,0" Margin="0,0,10,0"/>
                         <Grid Cursor="Hand" x:Name="AppsFiledGrid" MouseLeftButtonDown="AppsFiled_OnMouseDown">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="170" />
-                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="{Binding CollapsibleColumnWidth}" />
+                                <ColumnDefinition MaxWidth="40"  />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Apps Filed"/></TextBlock>
+                            <TextBlock Grid.Column="0" Margin="0,0,71,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Apps Filed"/></TextBlock>
                             <TextBlock Grid.Column="1" Style="{StaticResource Count}" Foreground="Black" Text="{Binding Tracker.FiledAppsCount, FallbackValue=0}" IsHitTestVisible="True" />
                         </Grid>
 
@@ -63,19 +64,19 @@
                     <StackPanel Orientation="Horizontal" Margin="5, 0,0,0">
                         <Grid Grid.Row ="1"  Cursor="Hand" x:Name="VendorsGrid" MouseLeftButtonDown="VendorsGrid_OnMouseDown">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="{Binding CollapsibleColumnWidth}" />
+                                <ColumnDefinition MaxWidth="40"  />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black" Padding="0,0,20,0"><Run Text="Contacts Today" /></TextBlock>
+                            <TextBlock Grid.Column="0" Margin="0,0,20,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black" Padding="0,0,20,0"><Run Text="Contacts Today" /></TextBlock>
                             <TextBlock Grid.Column="1" Style="{StaticResource Count}" Foreground="Red" Text="{Binding Tracker.ContactsToday, FallbackValue=0}" IsHitTestVisible="True" />
                         </Grid>
                         <Border x:Name="BadgeBorder1" BorderBrush="Black" BorderThickness="1,0,0,0" Margin="0,0,10,0"/>
                         <Grid Cursor="Hand" x:Name="TotalVendorsGrid" MouseLeftButtonDown="TotalVendorsGrid_OnMouseDown">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="170" />
-                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="{Binding CollapsibleColumnWidth}" />
+                                <ColumnDefinition MaxWidth="40"  />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Total Contacts"/></TextBlock>
+                            <TextBlock Grid.Column="0" Margin="0,0,25,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Total Contacts"/></TextBlock>
                             <TextBlock Grid.Column="1" Style="{StaticResource Count}" Foreground="Black" Text="{Binding Tracker.TotalContacts, FallbackValue=0}" IsHitTestVisible="True" />
                         </Grid>
                     </StackPanel>
@@ -94,4 +95,4 @@
             </Viewbox>
         </Grid>
     </Grid>
-</UserControl>
+</base:CollapsibleControl>

@@ -13,8 +13,8 @@ namespace WPFTracker.Windows.MainWindow
     {
 
 
-        private UserControl trackerUserControl;
-        private UserControl timedActivityUserControl;
+        private TrackerActivityControl trackerUserControl;
+        private TimedActivityControl timedActivityUserControl;
         private bool isHidden = false;
 
         public MainWindow()
@@ -95,16 +95,14 @@ namespace WPFTracker.Windows.MainWindow
 
         private void ToggleSize_Click(object sender, RoutedEventArgs e)
         {
-            var newVisibility = isHidden ? Visibility.Visible : Visibility.Collapsed;
-
             if (trackerUserControl != null)
             {
-                trackerUserControl.Visibility = newVisibility;
+                trackerUserControl.ToggleSize();
             }
 
             if (timedActivityUserControl != null)
             {
-                timedActivityUserControl.Visibility = newVisibility;
+                timedActivityUserControl.ToggleSize();
             }
 
             isHidden = !isHidden;
