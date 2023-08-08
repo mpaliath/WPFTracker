@@ -7,17 +7,13 @@ namespace WPFTracker.Utilities
 {
     public static class WindowSwitcher
     {
-        public static void SwitchToWindow(Window currentWindow, Window targetWindow)
+        public static void SwitchToLastUsedWindow(TrackerActivityControl trackerUserControl, TimedActivityControl timedActivityUserControl, ContentControl contentControl)
         {
-            if (currentWindow != null)
-            {
-                currentWindow.Close();
-            }
+            if (App.AppSettings.ShouldSwitchMode)
+                contentControl.Content = timedActivityUserControl;
+            else
+                contentControl.Content = trackerUserControl;
 
-            targetWindow.Show();
-
-            //App.AppSettings.ShouldSwitchMode = targetWindow is TimedActivityWindow;
-            App.AppSettings.Save();
         }
 
         public static void SwitchMode(TrackerActivityControl trackerUserControl, TimedActivityControl timedActivityUserControl, ContentControl contentControl)
@@ -29,6 +25,8 @@ namespace WPFTracker.Utilities
                 if (timedActivityUserControl != null && timedActivityUserControl.IsVisible)
                     timedActivityUserControl.Visibility = Visibility.Collapsed;
 
+                App.AppSettings.ShouldSwitchMode = false;
+                App.AppSettings.Save();
             }
             else
             {
@@ -36,6 +34,9 @@ namespace WPFTracker.Utilities
                 contentControl.Content = timedActivityUserControl;
                 if (trackerUserControl != null && trackerUserControl.IsVisible)
                     trackerUserControl.Visibility = Visibility.Collapsed;
+
+                App.AppSettings.ShouldSwitchMode = true;
+                App.AppSettings.Save();
             }
         }
 

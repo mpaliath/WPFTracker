@@ -62,35 +62,7 @@ namespace WPFTracker.Windows.MainWindow
 
         private void ShowLastUsedWindow()
         {
-            if (trackerUserControl == null || !trackerUserControl.IsVisible)
-            {
-                if (trackerUserControl == null)
-                {
-                    trackerUserControl = new TrackerActivityControl(); // Replace TrackerUserControl with the actual class name for TrackerWindow
-                }
-
-                // Set the contentControl to display the TrackerUserControl
-                contentControl.Content = trackerUserControl;
-
-                if (timedActivityUserControl != null && timedActivityUserControl.IsVisible)
-                    timedActivityUserControl.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                {
-                    if (timedActivityUserControl == null)
-                    {
-                        timedActivityUserControl = new TimedActivityControl(); // Replace TimedActivityUserControl with the actual class name for TimedActivityWindow
-
-                    }
-
-                    // Set the contentControl to display the TimedActivityUserControl
-                    contentControl.Content = timedActivityUserControl;
-
-                    if (trackerUserControl != null && trackerUserControl.IsVisible)
-                        trackerUserControl.Visibility = Visibility.Collapsed;
-                }
-            }
+            WindowSwitcher.SwitchToLastUsedWindow(trackerUserControl, timedActivityUserControl, contentControl);
         }
 
         private void ToggleSize_Click(object sender, RoutedEventArgs e)
