@@ -21,14 +21,8 @@ namespace WPFTracker
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            if (AppSettings.ShouldSwitchMode)
-            {
-                StartupUri = new Uri("Windows/Timer/TimedActivityWindow.xaml", UriKind.Relative);
-            }
-            else
-            {
-                StartupUri = new Uri("Windows/Tracker/TrackerWindow.xaml", UriKind.Relative);
-            }
+
+            StartupUri = new Uri("Windows/MainWindow/MainWindow.xaml", UriKind.Relative);
             base.OnStartup(e);
         }
 

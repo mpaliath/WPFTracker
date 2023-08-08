@@ -5,53 +5,28 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using WPFTracker.Controls.TrackerTaskbarIcon;
 using WPFTracker.Utilities;
 
 namespace WPFTracker.Windows.Timer
 {
     /// <summary>
-    /// Interaction logic for TimedActivityWindow.xaml
+    /// Interaction logic for TimedActivityControl.xaml
     /// </summary>
-    public partial class TimedActivityWindow : Window
+    public partial class TimedActivityControl : UserControl
     {
         private TimeSpan remainingTime = TimeSpan.Zero;
         private DispatcherTimer timer = new DispatcherTimer();
         private bool isTimerCountingDown = false;
 
-        public TimedActivityWindow()
+        public TimedActivityControl()
         {
             InitializeComponent();
-
-            SetupWindowLoad();
 
             SetupTimer();
         }
 
-        private void SetupWindowLoad()
-        {
-            this.Loaded += TimedActivityWindow_Loaded;
 
-            // Set the window startup location to manual
-            this.WindowStartupLocation = WindowStartupLocation.Manual;
 
-            // Set the window style to none
-            this.WindowStyle = WindowStyle.None;
-            this.ResizeMode = ResizeMode.NoResize;
-
-            // Set the window to always be on top
-            this.Topmost = true;
-
-            // Set the window size to match the size of the content
-            this.SizeToContent = SizeToContent.WidthAndHeight;
-        }
-
-        private void TimedActivityWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Set the window position to the top right of the screen
-            this.Left = SystemParameters.WorkArea.Width - this.ActualWidth;
-            this.Top = 0;
-        }
 
         private void SetupTimer()
         {
@@ -182,12 +157,6 @@ namespace WPFTracker.Windows.Timer
             }
         }
 
-        private void SwitchModes_Click(object sender, RoutedEventArgs e)
-        {
-            var window = new TrackerWindow();
-            WindowSwitcher.SwitchToWindow(this, window);
-        }
-
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -222,16 +191,7 @@ namespace WPFTracker.Windows.Timer
 
         private void Minimize_Click(object sender, RoutedEventArgs e)
         {
-            // Get the reference to the main window
-            var mainWindow = Application.Current.MainWindow as TimedActivityWindow;
-
-            // Minimize the window
-            if (mainWindow != null)
-            {
-                TrackerTaskbarIcon.Instance.Initialize();
-
-                mainWindow.Hide();
-            }
+            //TODO
 
         }
     }
