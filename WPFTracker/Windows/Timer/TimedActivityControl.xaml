@@ -7,7 +7,7 @@
              xmlns:base="clr-namespace:WPFTracker.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid KeyDown="Grid_KeyDown" KeyUp="Grid_KeyUp">
 
         <StackPanel DockPanel.Dock="Right" >
             <Border Background="White" BorderBrush="Black" BorderThickness="1,1,1,1" Margin="0,0,0,0" Padding="2,0,0,0">
@@ -27,7 +27,7 @@
                         <ComboBoxItem Content="20" />
                         <ComboBoxItem Content="30" />
                     </ComboBox>
-                    <Button VerticalAlignment="Center" x:Name="TimerAction" Content="Start Timer" Width="85" Grid.Row="0" Grid.Column="1" Click="StartTimer_Click" Margin="10,0,10,0" />
+                    <Button VerticalAlignment="Center" x:Name="TimerAction" Content="Start Timer" Width="85" Grid.Row="0" Grid.Column="1" Click="TimerAction_Click" Margin="10,0,10,0"/>
                     <Rectangle Grid.Row="0" Grid.Column="2" Fill="Transparent" />
                     <!-- Transparent Rectangle as a placeholder -->
                     <TextBlock x:Name="TimeLeftTextBlock" Grid.Row="0" Grid.Column="2" MinWidth="70" FontWeight="Bold" FontSize="25" VerticalAlignment="Center" />

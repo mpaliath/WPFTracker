@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Media;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,6 +25,7 @@ namespace WPFTracker.Windows.Timer
         {
             InitializeComponent();
             SetupTimer();
+            currentState = TimerState.Stopped;
         }
 
 
@@ -50,45 +52,116 @@ namespace WPFTracker.Windows.Timer
             }
         }
 
-        private void StartTimer_Click(object sender, RoutedEventArgs e)
+        private void TimerAction_Click(object sender, RoutedEventArgs e)
         {
-            var newContent = shouldRestart ? "Restart Timer" : "Stop Timer";
-            if (!isTimerCountingDown)
-            {
-                if (TimerOptionsComboBox.SelectedItem is ComboBoxItem selectedItem && int.TryParse(selectedItem.Content.ToString(), out int minutes))
-                {
-                    remainingTime = TimeSpan.FromMinutes(minutes);
-                    UpdateTimeLeft();
-                }
-                timer.Start();
-                isTimerCountingDown = true;
-                TimerAction.Content = newContent;
-            }
-            else
-            {
-                if (shouldRestart)
-                {
-                    if (TimerOptionsComboBox.SelectedItem is ComboBoxItem selectedItem && int.TryParse(selectedItem.Content.ToString(), out int minutes))
-                    {
-                        // Start the timer with the selected minutes
-                        remainingTime = TimeSpan.FromMinutes(minutes);
-                        UpdateTimeLeft();
-                        timer.Start();
+            ActionDefinition newAction = GetActionForState(currentState);
 
-                        TimerAction.Content = "Restart Timer";
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please select a valid timer duration.");
-                    }
+            if (TimerOptionsComboBox.SelectedItem is ComboBoxItem selectedItem && int.TryParse(selectedItem.Content.ToString(), out int minutes))
+            {
+                currentState = ProcessButtonClick(newAction, minutes);
+
+                newAction = GetActionForState(currentState);
+                TimerAction.Content = newAction.Text;
+
+                if (newAction.Type != ActionType.Start)
+                {
+                    TimerOptionsComboBox.IsEnabled = false;
                 }
                 else
                 {
-                    isTimerCountingDown = false;
-                    timer.Stop();
-                    TimerAction.Content = "Restart Timer";
+                    TimerOptionsComboBox.IsEnabled = true;
                 }
             }
+
+
+
+        }
+
+        private ActionDefinition GetActionForState(TimerState state)
+        {
+            ActionDefinition newAction = ButtonActions.None;
+            if (Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                if (currentState == TimerState.Started)
+                    newAction = ButtonActions.Pause;
+                else if (currentState == TimerState.Paused)
+                    newAction = ButtonActions.Restart;
+                else if (currentState == TimerState.Stopped)
+                    newAction = ButtonActions.Start;
+            }
+            else
+            {
+                if (currentState == TimerState.Started)
+                    newAction = ButtonActions.Stop;
+                else if (currentState == TimerState.Paused)
+                    newAction = ButtonActions.Continue;
+                else if (currentState == TimerState.Stopped)
+                    newAction = ButtonActions.Start;
+            }
+
+            if (newAction == null) { Debugger.Break(); }
+
+            return newAction;
+        }
+
+
+        private TimerState ProcessButtonClick(ActionDefinition newAction, int minutes)
+        {
+            if (newAction == ButtonActions.None)
+            {
+                return currentState;
+            }
+
+            TimerState newState = TimerState.Started;
+
+            switch (newAction.Type)
+            {
+                case ActionType.Start:
+                    isTimerCountingDown = true;
+                    remainingTime = TimeSpan.FromMinutes(minutes);
+                    UpdateTimeLeft();
+                    timer.Start();
+                    newState = TimerState.Started;
+
+                    break;
+
+                case ActionType.Stop:
+
+                    isTimerCountingDown = true;
+                    timer.Stop();
+                    remainingTime = TimeSpan.FromMinutes(minutes);
+                    UpdateTimeLeft();
+                    newState = TimerState.Stopped;
+
+                    break;
+
+                case ActionType.Restart:
+
+                    isTimerCountingDown = true;
+                    // Start the timer with the selected minutes
+                    remainingTime = TimeSpan.FromMinutes(minutes);
+                    UpdateTimeLeft();
+                    timer.Start();
+                    newState = TimerState.Started;
+
+                    break;
+
+                case ActionType.Pause:
+                    timer.Stop();
+                    newState = TimerState.Paused;
+
+                    break;
+
+                case ActionType.Continue:
+                    timer.Start();
+                    newState = TimerState.Started;
+
+                    break;
+
+            }
+
+
+            return newState;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -159,35 +232,41 @@ namespace WPFTracker.Windows.Timer
 
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            System.Windows.Application.Current.Shutdown();
         }
 
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (Keyboard.Modifiers == ModifierKeys.Control)
-            {
-                SetActionToRestart(true);
-            }
+
         }
 
-        private bool shouldRestart = false;
+        private void Grid_KeyDown(object sender, KeyEventArgs e)
+        {
+            var nextAction = GetActionForState(currentState);
+            SetButtonAction(nextAction);
+        }
 
-        private void SetActionToRestart(bool shouldRestart)
+        private void SetButtonAction(ActionDefinition action)
         {
             Dispatcher.Invoke(() =>
             {
-                TimerAction.Content = "Restart Timer";
+                TimerAction.Content = action.Text;
                 shouldRestart = true;
             });
         }
 
-        private void Window_KeyUp(object sender, KeyEventArgs e)
+        private bool shouldRestart = false;
+        private TimerState currentState;
+
+        private void Grid_KeyUp(object sender, KeyEventArgs e)
         {
             Dispatcher.Invoke(() =>
-            {
-                TimerAction.Content = "Stop Timer";
-                shouldRestart = false;
-            });
+                {
+                    var nextAction = GetActionForState(currentState);
+                    SetButtonAction(nextAction);
+
+                    shouldRestart = false;
+                });
         }
 
         private void Minimize_Click(object sender, RoutedEventArgs e)
@@ -195,5 +274,46 @@ namespace WPFTracker.Windows.Timer
             //TODO
 
         }
+
+        public enum ActionType
+        {
+            Stop,
+            Restart,
+            Start,
+            Pause,
+            Continue
+        }
+
+        public enum TimerState
+        {
+            Stopped,
+            Started,
+            Paused
+        }
+
+        private class ActionDefinition
+        {
+
+            public string Text { get; set; }
+            public ActionType Type { get; }
+
+            public ActionDefinition(string text, ActionType type)
+            {
+                Text = text;
+                Type = type;
+            }
+        }
+
+        private static class ButtonActions
+        {
+            public static ActionDefinition Stop = new ActionDefinition("Stop Timer", ActionType.Stop);
+            public static ActionDefinition Restart = new ActionDefinition("Restart Timer", ActionType.Restart);
+            public static ActionDefinition Start = new ActionDefinition("Start Timer", ActionType.Start);
+            public static ActionDefinition Pause = new ActionDefinition("Pause Timer", ActionType.Pause);
+            public static ActionDefinition Continue = new ActionDefinition("Continue Timer", ActionType.Continue);
+            internal static ActionDefinition None;
+        }
+
+
     }
 }
