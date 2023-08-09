@@ -31,6 +31,8 @@ namespace WPFTracker.Controls
 
         public void OpenPopup(double minutesAllocated, double timeSpent)
         {
+            ProblemLink.Text = "";
+            Comments.Text = "";
             InputPopup.IsOpen = true;
             this.timeSpent = timeSpent;
             this.minutesAllocated = minutesAllocated;
