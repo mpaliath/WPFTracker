@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Media;
 using System.Windows;
 using System.Windows.Controls;
@@ -71,6 +70,12 @@ namespace WPFTracker.Windows.Timer
                 {
                     TimerOptionsComboBox.IsEnabled = true;
                 }
+
+                if (currentState == TimerState.Stopped)
+                {
+                    var timespent = minutes - (isTimerCountingDown ? 1 : -1) * remainingTime.TotalMinutes;
+                    ProblemInfoPopup.OpenPopup(minutes, timespent);
+                }
             }
 
 
@@ -99,7 +104,6 @@ namespace WPFTracker.Windows.Timer
                     newAction = ButtonActions.Start;
             }
 
-            if (newAction == null) { Debugger.Break(); }
 
             return newAction;
         }
@@ -126,10 +130,7 @@ namespace WPFTracker.Windows.Timer
                     break;
 
                 case ActionType.Stop:
-
-                    isTimerCountingDown = true;
                     timer.Stop();
-                    remainingTime = TimeSpan.FromMinutes(minutes);
                     UpdateTimeLeft();
                     newState = TimerState.Stopped;
 
@@ -233,11 +234,6 @@ namespace WPFTracker.Windows.Timer
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
-        }
-
-        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-
         }
 
         private void Grid_KeyDown(object sender, KeyEventArgs e)
