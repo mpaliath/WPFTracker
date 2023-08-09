@@ -45,13 +45,13 @@
                             <TextBlock Grid.Column="1" Style="{StaticResource Count}" Foreground="Red" Text="{Binding Tracker.FiledTodayCount, FallbackValue=0}" IsHitTestVisible="True" />
                         </Grid>
 
-                        <Border x:Name="BadgeBorder" BorderBrush="Black" BorderThickness="1,0,0,0" Margin="0,0,10,0"/>
+                        <Border x:Name="BadgeBorder" BorderBrush="Black" BorderThickness="1,0,0,0"/>
                         <Grid Cursor="Hand" x:Name="AppsFiledGrid" MouseLeftButtonDown="AppsFiled_OnMouseDown">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="{Binding CollapsibleColumnWidth}" />
                                 <ColumnDefinition MaxWidth="40"  />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Margin="0,0,71,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Apps Filed"/></TextBlock>
+                            <TextBlock Grid.Column="0" Margin="3,0,67,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Apps Filed"/></TextBlock>
                             <TextBlock Grid.Column="1" Style="{StaticResource Count}" Foreground="Black" Text="{Binding Tracker.FiledAppsCount, FallbackValue=0}" IsHitTestVisible="True" />
                         </Grid>
 
@@ -70,13 +70,13 @@
                             <TextBlock Grid.Column="0" Margin="0,0,20,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black" Padding="0,0,20,0"><Run Text="Contacts Today" /></TextBlock>
                             <TextBlock Grid.Column="1" Style="{StaticResource Count}" Foreground="Red" Text="{Binding Tracker.ContactsToday, FallbackValue=0}" IsHitTestVisible="True" />
                         </Grid>
-                        <Border x:Name="BadgeBorder1" BorderBrush="Black" BorderThickness="1,0,0,0" Margin="0,0,10,0"/>
+                        <Border x:Name="BadgeBorder1" BorderBrush="Black" BorderThickness="1,0,0,0"/>
                         <Grid Cursor="Hand" x:Name="TotalVendorsGrid" MouseLeftButtonDown="TotalVendorsGrid_OnMouseDown">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="{Binding CollapsibleColumnWidth}" />
                                 <ColumnDefinition MaxWidth="40"  />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Margin="0,0,25,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Total Contacts"/></TextBlock>
+                            <TextBlock Grid.Column="0" Margin="3,0,20,0" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" FontStyle="Italic" Foreground="Black"><Run Text="Total Contacts"/></TextBlock>
                             <TextBlock Grid.Column="1" Style="{StaticResource Count}" Foreground="Black" Text="{Binding Tracker.TotalContacts, FallbackValue=0}" IsHitTestVisible="True" />
                         </Grid>
                     </StackPanel>
