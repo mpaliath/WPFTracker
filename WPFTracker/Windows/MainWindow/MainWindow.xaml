@@ -15,16 +15,17 @@
             <MenuItem Header="Quit" Click="Quit_Click"/>
         </ContextMenu>
     </Window.Resources>
-    <Grid>
+    <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+
         <!-- Add the button at the bottom of the window -->
-        <Button Content=">" Name="ToggleSize" Click="ToggleSize_Click" Grid.Column="0" Margin="0,10,0,10"/>
+        <Button Content=">" Name="ToggleSize" Click="ToggleSize_Click" VerticalAlignment="Stretch" Width="20" Grid.Column="0" Grid.Row="1"/>
 
         <!-- Add a ContentControl to host the child UserControls -->
-        <ContentControl x:Name="contentControl" Grid.Column="1" ContextMenu="{StaticResource ContextMenu}"/>
+        <ContentControl x:Name="contentControl" Grid.Column="2" ContextMenu="{StaticResource ContextMenu}"/>
     </Grid>
 </Window>
