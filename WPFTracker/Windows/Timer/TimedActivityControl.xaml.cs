@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Media;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -51,13 +52,33 @@ namespace WPFTracker.Windows.Timer
             }
         }
 
-        private void TimerAction_Click(object sender, RoutedEventArgs e)
+        private async void TimerAction_ClickAsync(object sender, RoutedEventArgs e)
         {
             ActionDefinition newAction = GetActionForState(currentState);
 
             if (TimerOptionsComboBox.SelectedItem is ComboBoxItem selectedItem && int.TryParse(selectedItem.Content.ToString(), out int minutes))
             {
                 currentState = ProcessButtonClick(newAction, minutes);
+
+                if (currentState == TimerState.Stopped)
+                {
+                    var timespent = minutes - (isTimerCountingDown ? 1 : -1) * remainingTime.TotalMinutes;
+                    try
+                    {
+                        TimerAction.IsEnabled = false;
+                        await ProblemInfoPopup.OpenPopup(minutes, timespent, isTimerCountingDown == false);
+                        UpdateTimeLeft();
+                        currentState = TimerState.Finished;
+                    }
+                    catch (TaskCanceledException ex)
+                    {
+                        currentState = ProcessButtonClick(ButtonActions.Pause, -1);
+                    }
+                    finally
+                    {
+                        TimerAction.IsEnabled = true;
+                    }
+                }
 
                 newAction = GetActionForState(currentState);
                 TimerAction.Content = newAction.Text;
@@ -70,12 +91,6 @@ namespace WPFTracker.Windows.Timer
                 {
                     TimerOptionsComboBox.IsEnabled = true;
                 }
-
-                if (currentState == TimerState.Stopped)
-                {
-                    var timespent = minutes - (isTimerCountingDown ? 1 : -1) * remainingTime.TotalMinutes;
-                    ProblemInfoPopup.OpenPopup(minutes, timespent);
-                }
             }
 
 
@@ -85,6 +100,11 @@ namespace WPFTracker.Windows.Timer
         private ActionDefinition GetActionForState(TimerState state)
         {
             ActionDefinition newAction = ButtonActions.None;
+            if (state == TimerState.Finished)
+            {
+                newAction = ButtonActions.Restart;
+            }
+
             if (Keyboard.Modifiers == ModifierKeys.Control)
             {
                 if (currentState == TimerState.Started)
@@ -131,7 +151,6 @@ namespace WPFTracker.Windows.Timer
 
                 case ActionType.Stop:
                     timer.Stop();
-                    UpdateTimeLeft();
                     newState = TimerState.Stopped;
 
                     break;
@@ -284,7 +303,8 @@ namespace WPFTracker.Windows.Timer
         {
             Stopped,
             Started,
-            Paused
+            Paused,
+            Finished
         }
 
         private class ActionDefinition

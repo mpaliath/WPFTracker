@@ -13,31 +13,39 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Popup x:Name="InputPopup" IsOpen="False" StaysOpen="True" MinHeight="0" Width="500" Opened="InputPopup_Opened">
+    <Popup x:Name="InputPopup" IsOpen="False" StaysOpen="True" MinHeight="0" Width="500" Opened="InputPopup_Opened" KeyDown="InputPopup_KeyDown">
         <Border x:Name="PopupBorder" Background="White" BorderBrush="White" BorderThickness="5">
             <!-- Custom content for the popup -->
             <Grid >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock Text="Problem Link" Grid.Row="0"/>
-            <TextBox x:Name="ProblemLink" TabIndex="0" Grid.Row="1" />
-            <TextBlock Text="Status" Grid.Row="2"/>
-            <ComboBox Name="Status" Grid.Row="3">
-                    <ComboBoxItem Content="Completed" IsSelected="True" />
-                    <ComboBoxItem Content="Completed With Hints" />
-                    <ComboBoxItem Content="Redo" />
-                </ComboBox>
-            <TextBlock Text="Comments" Grid.Row="4"/>
-            <TextBox x:Name="Comments" AcceptsReturn="True" MinHeight ="40" TextWrapping="Wrap"  Grid.Row="5" />
-            <Button Content="Submit" Margin="0,10,0,0" Click="Submit_Click" TabIndex="1" Grid.Row="6" />
-                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Problem Link" Grid.Row="0"/>
+                <TextBox x:Name="ProblemLink" TabIndex="0" Grid.Row="1" />
+                <TextBlock Text="Status" TextAlignment="Left"  Grid.Row="2" />
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Name="Status" Grid.Column="0">
+                        <ComboBoxItem Content="Completed" IsSelected="True" />
+                        <ComboBoxItem Content="Completed With Hints" />
+                        <ComboBoxItem Content="Redo" />
+                    </ComboBox>
+
+                    <CheckBox x:Name="ShouldRedo" Content="Redo?" VerticalAlignment="Center" Margin="50,0,10,0" Grid.Column="1" HorizontalAlignment="Right" />
+                </Grid>
+                <TextBlock Text="Comments" Grid.Row="4"/>
+                <TextBox x:Name="Comments" AcceptsReturn="True" MinHeight ="40" TextWrapping="Wrap"  Grid.Row="5" />
+                <Button Content="Submit" Margin="0,10,0,0" Click="Submit_Click" TabIndex="1" Grid.Row="6" />
+
             </Grid>
         </Border>
     </Popup>
