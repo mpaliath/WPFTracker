@@ -31,10 +31,10 @@ namespace WPFTracker.Controls
             InitializeComponent();
         }
 
-        TaskCompletionSource popupTask;
-        public Task OpenPopup(double minutesAllocated, double timeSpent, bool revisit)
+        TaskCompletionSource<bool> popupTask;
+        public Task<bool> OpenPopup(double minutesAllocated, double timeSpent, bool revisit)
         {
-            popupTask = new TaskCompletionSource();
+            popupTask = new TaskCompletionSource<bool>();
 
             InputPopup.IsOpen = true;
             this.timeSpent = timeSpent;
@@ -55,7 +55,7 @@ namespace WPFTracker.Controls
             return popupTask.Task;
         }
 
-        public void ClosePopup(EventArgs? e, bool clearFields = false)
+        public void ClosePopup(EventArgs? e, bool clearFields = false, bool shouldIgnore = false)
         {
             InputPopup.IsOpen = false;
 
@@ -65,9 +65,9 @@ namespace WPFTracker.Controls
                 Comments.Text = "";
             }
 
-            if (clearFields)
+            if (clearFields || shouldIgnore)
             {
-                popupTask.SetResult();
+                popupTask.SetResult(shouldIgnore);
             }
             else
             {
@@ -80,12 +80,20 @@ namespace WPFTracker.Controls
         private void Submit_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             SetDefaultFocus();
+            if (Status.SelectedIndex == 0)
+            {
+                ClosePopup(null, false, true);
+                return;
+            }
+
             if (ProblemLink.Text == string.Empty)
             {
                 Storyboard shakeAnimation = (Storyboard)FindResource("ShakeAnimation");
                 shakeAnimation.Begin(InputPopup);
                 return;
             }
+
+
 
             if (!RetryingStreamWriter.Write(TrackingFilePath, DateTime.Now.ToString("d"), ProblemLink.Text, minutesAllocated, timeSpent, Status.SelectionBoxItem, Comments.Text, (bool)ShouldRedo.IsChecked ? "YES" : "NO"))
             {

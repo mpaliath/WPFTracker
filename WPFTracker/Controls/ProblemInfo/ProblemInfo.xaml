@@ -35,9 +35,11 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <ComboBox Name="Status" Grid.Column="0">
-                        <ComboBoxItem Content="Completed" IsSelected="True" />
+                        <ComboBoxItem Content="Ignore" IsSelected="True" />
+                        <ComboBoxItem Content="Completed" />
                         <ComboBoxItem Content="Completed With Hints" />
                         <ComboBoxItem Content="Redo" />
+                        
                     </ComboBox>
 
                     <CheckBox x:Name="ShouldRedo" Content="Redo?" VerticalAlignment="Center" Margin="50,0,10,0" Grid.Column="1" HorizontalAlignment="Right" />

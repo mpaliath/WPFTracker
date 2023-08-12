@@ -66,13 +66,20 @@ namespace WPFTracker.Windows.Timer
                     try
                     {
                         TimerAction.IsEnabled = false;
-                        await ProblemInfoPopup.OpenPopup(minutes, timespent, isTimerCountingDown == false);
-                        UpdateTimeLeft();
-                        currentState = TimerState.Finished;
+                        var wasPopupCancelled = await ProblemInfoPopup.OpenPopup(minutes, timespent, isTimerCountingDown == false);
+                        if (!wasPopupCancelled)
+                        {
+                            UpdateTimeLeft();
+                            currentState = TimerState.Finished;
+                        }
+                        else
+                        {
+                            currentState = TimerState.Stopped;
+                        }
                     }
                     catch (TaskCanceledException ex)
                     {
-                        currentState = ProcessButtonClick(ButtonActions.Pause, -1);
+                        currentState = ProcessButtonClick(ButtonActions.Continue, -1);
                     }
                     finally
                     {
@@ -102,7 +109,7 @@ namespace WPFTracker.Windows.Timer
             ActionDefinition newAction = ButtonActions.None;
             if (state == TimerState.Finished)
             {
-                newAction = ButtonActions.Restart;
+                newAction = ButtonActions.Start;
             }
 
             if (Keyboard.Modifiers == ModifierKeys.Control)
