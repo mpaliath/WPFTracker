@@ -1,9 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using WPFTracker.Utilities;
 using WPFTracker.Windows.Timer;
 using WPFTracker.Windows.Tracker;
-
+using WindowsPoint = System.Windows.Point;
 namespace WPFTracker.Windows.MainWindow
 {
     /// <summary>
@@ -80,6 +81,8 @@ namespace WPFTracker.Windows.MainWindow
             isHidden = !isHidden;
             ToggleSize.Content = isHidden ? "<" : ">";
 
+            WindowSwitcher.SetFocus(contentControl);
+
         }
 
         private void Quit_Click(object sender, RoutedEventArgs e)
@@ -97,6 +100,51 @@ namespace WPFTracker.Windows.MainWindow
         private void SwitchModes_Click(object sender, RoutedEventArgs e)
         {
             WindowSwitcher.SwitchMode(trackerUserControl, timedActivityUserControl, contentControl);
+        }
+
+        WindowsPoint initialMousePosition;
+        double initialWindowTop;
+
+        private void Window_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftShift && e.IsUp == true)
+            {
+
+                this.Cursor = null;
+
+                WindowSwitcher.SetFocus(contentControl);
+                e.Handled = true;
+            }
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
+            {
+                var currentMousePosition = PointToScreen(e.GetPosition(this));
+                Top = initialWindowTop + (currentMousePosition.Y - initialMousePosition.Y);
+            }
+        }
+
+        private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Shift)
+            {
+                e.Handled = true;
+
+                initialMousePosition = PointToScreen(e.GetPosition(this));
+                initialWindowTop = Top;
+            }
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Shift && Keyboard.FocusedElement is MainWindow)
+            {
+                this.Cursor = Cursors.SizeAll;
+                e.Handled = true;
+            }
         }
     }
 }

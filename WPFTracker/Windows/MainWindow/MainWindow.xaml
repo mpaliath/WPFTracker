@@ -7,7 +7,7 @@
         SizeToContent="WidthAndHeight"
          WindowStyle="SingleBorderWindow" AllowsTransparency="True" Background="Transparent"
         mc:Ignorable="d"
-        Title="MainWindow">
+        Title="MainWindow" KeyUp="Window_KeyUp" MouseMove="Window_MouseMove" PreviewMouseDown="Window_PreviewMouseDown" PreviewKeyDown="Window_PreviewKeyDown">
     <Window.Resources>
         <ContextMenu x:Key="ContextMenu" Placement="MousePoint">
             <MenuItem Header="Minimize" Click="Minimize_Click"/>

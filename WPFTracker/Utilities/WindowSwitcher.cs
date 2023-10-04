@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using WPFTracker.Controls;
 using WPFTracker.Windows.Timer;
 using WPFTracker.Windows.Tracker;
 
@@ -37,6 +38,14 @@ namespace WPFTracker.Utilities
 
                 App.AppSettings.ShouldSwitchMode = true;
                 App.AppSettings.Save();
+            }
+        }
+
+        public static void SetFocus(ContentControl contentControl)
+        {
+            if (contentControl.Content is CollapsibleControl collapsibleControl)
+            {
+                collapsibleControl.Focus();
             }
         }
 
