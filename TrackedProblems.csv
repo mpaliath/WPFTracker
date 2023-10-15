@@ -1,0 +1,57 @@
+,,Time in,Minutes,,,,
+Date,Problem Link,Alloted,Spent,Status,Comments,Redo?,
+8/9/2023, https://leetcode.com/problems/count-good-nodes-in-binary-tree,30,19.7, Completed, Took a bit of time to get in the flow, NO,
+8/10/2023, https://leetcode.com/problems/validate-binary-search-tree,20,33.16666667, Completed With Hints, Intuition missed, YES,
+8/11/2023, https://leetcode.com/problems/subsets/,20,66.33333333, Redo, Complete mess, YES,
+8/12/2023, https://leetcode.com/problems/subsets,1,0, Redo, Subsets. Understand time complexity, NO,
+8/12/2023, https://leetcode.com/problems/combination-sum/,30,44.21666667, Redo, Evening blues??, YES,
+8/13/2023, https://leetcode.com/problems/combination-sum,20,32.21666667, Completed With Hints, Took time to figure out that only 2 cases need to be backtracked. Ignore current and Include current. Including multiple current is handled by not incrementing the startpointer, YES,
+8/13/2023, https://leetcode.com/problems/combination-sum-iii,20,12.48333333, Completed With Hints, Didn't read question properly to understand nuances. INSIGHT: Read examples, try to break, NO
+8/13/2023, https://leetcode.com/problems/permutations,20,35.25, Completed With Hints, No need to over-optimize and use Q, YES,
+8/17/2023, https://leetcode.com/problems/subsets-ii/description/, 30, 33.85, Completed With Hints, , YES
+8/22/2023, https://leetcode.com/problems/word-search, 20, 28.8, Redo, , YES
+8/22/2023, https://leetcode.com/problems/n-queens, 20, 42.33333333333333, Redo, , YES
+8/23/2023, https://leetcode.com/problems/n-queens, 30, 0.03333333333333499, Redo, looked at solution. wrote code, NO
+8/23/2023, https://leetcode.com/problems/subsets-ii, 20, 21.95, Redo, , YES
+8/23/2023, https://leetcode.com/problems/combination-sum-ii, 20, 13.45, Redo, need to understand why when duplicates are allowed, we don't need to call backtrack without adding current item, NO
+8/23/2023, https://leetcode.com/problems/word-search, 20, 11.3, Completed, , NO
+8/23/2023, https://leetcode.com/problems/palindrome-partitioning, 20, 26.2, Completed, took a bit of time to iron out the conditions, YES
+8/23/2023, https://leetcode.com/problems/letter-combinations-of-a-phone-number/, 20, 22.683333333333334, Redo, fternoon blues, YES
+8/24/2023, https://leetcode.com/problems/letter-combinations-of-a-phone-number, 20, 23.03333333333333, Completed With Hints, , YES
+8/24/2023, https://leetcode.com/problems/implement-trie-prefix-tree, 20, 22.133333333333333, Completed With Hints,  datastructure to use was not clear, NO
+8/24/2023, https://leetcode.com/problems/design-add-and-search-words-data-structure, 20, 0, Redo, i,j confusion causing lots of problems, NO
+8/24/2023, https://leetcode.com/problems/number-of-islands/, 20, 23.7, Redo, , YES
+8/24/2023, https://leetcode.com/problems/number-of-islands, 10, 24.483333333333334, Redo, silly mistakes, YES
+8/24/2023, https://leetcode.com/problems/clone-graph, 20, 10.583333333333334, Completed With Hints, careless mistakes, NO
+8/24/2023, https://leetcode.com/problems/max-area-of-island, 20, 4.666666666666666, Completed, , NO
+8/25/2023, https://leetcode.com/problems/pacific-atlantic-water-flow/, 20, 3.166666666666668, Redo, , NO
+8/29/2023, https://leetcode.com/problems/pacific-atlantic-water-flow, 5, 0.016666666666666607, Redo, not very clear on solution, NO
+8/29/2023, https://leetcode.com/problems/surrounded-regions, 20, 46.93333333333334, Redo, Failed 39/58th, YES
+8/29/2023, https://leetcode.com/problems/kth-largest-element-in-a-stream/, 20, 18.083333333333332, Redo, , NO
+8/30/2023, https://leetcode.com/problems/kth-largest-element-in-a-stream, 10, 8.25, Redo, Learning, NO
+8/30/2023, https://leetcode.com/problems/kth-largest-element-in-a-stream, 10, 0, Redo, Priority queues, NO
+8/30/2023, https://leetcode.com/problems/last-stone-weight, 10, 7.833333333333334, Completed With Hints, Remember - PQ prioritizes dequeue by min priority, NO
+8/30/2023, https://leetcode.com/problems/k-closest-points-to-origin/, 10, 7.766666666666667, Completed, Silly mistake, NO
+8/30/2023, https://leetcode.com/problems/kth-largest-element-in-an-array, 10, 14, Completed With Hints, 3rd largest = smallest in a min heap of size 3, YES
+8/30/2023, https://leetcode.com/problems/task-scheduler/, 20, 37.58333333333333, Redo, Confusion during impl because not thought out, YES
+8/31/2023, https://leetcode.com/problems/design-twitter/, 30, 28.916666666666668, Redo, , NO
+8/31/2023, https://leetcode.com/problems/climbing-stairs, 10, 6.566666666666666, Completed, Complexity analysis, NO
+9/5/2023, https://leetcode.com/problems/min-cost-climbing-stairs, 10, 19.166666666666664, Completed, , NO
+9/5/2023, https://leetcode.com/problems/house-robber/, 1, 11.616666666666667, Redo, , YES
+9/5/2023, https://leetcode.com/problems/house-robber, 10, 20.7, Completed With Hints, , YES
+9/5/2023, https://leetcode.com/problems/house-robber-ii/, 10, 27.966666666666665, Redo, , YES
+9/6/2023, https://leetcode.com/problems/house-robber-ii, 20, 18.816666666666666, Completed, Larger memory footprint. Can we just do with 2 vars instead, NO
+9/6/2023, https://leetcode.com/problems/longest-palindromic-substring/, 20, 27.4, Redo, , YES
+9/6/2023, https://leetcode.com/problems/palindromic-substrings, 20, 16.96666666666667, Completed With Hints, Obvious but silly, NO
+9/6/2023, https://leetcode.com/problems/decode-ways/, 10, 20.28333333333333, Redo, Didnt think about edge cases which require dp., YES
+9/6/2023, https://leetcode.com/problems/coin-change/, 10, 33.3, Redo, , YES
+9/6/2023, https://leetcode.com/problems/coin-change, 10, 22.1, Redo, DP with recursion is too costly, YES
+9/7/2023, https://leetcode.com/problems/coin-change/, 10, 20.65, Redo, , YES
+9/7/2023, https://leetcode.com/problems/maximum-product-subarray/, 10, 29.5, Redo, , YES
+9/8/2023, https://leetcode.com/problems/maximum-product-subarray, 20, 37.21666666666667, Redo, , YES
+9/8/2023, https://leetcode.com/problems/word-break/, 10, 17.016666666666666, Redo, 15 Mins to build the Word map , YES
+9/8/2023, https://leetcode.com/problems/longest-increasing-subsequence/, 10, 18.583333333333336, Redo, , YES
+9/8/2023, https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii, 10, 10.083333333333334, Completed, , NO
+9/11/2023, https://leetcode.com/problems/longest-increasing-subsequence, 10, 15.683333333333334, Completed With Hints, Recursive DP is slow, YES
+9/11/2023, https://leetcode.com/problems/longest-increasing-subsequence, 10, 25.866666666666667, Completed With Hints, DP without recursion is much faster. But is it still On2, YES
+9/12/2023, https://leetcode.com/problems/lru-cache, 20, 50.91666666666667, Redo, dummy nodes missed causing too much complications, YES
