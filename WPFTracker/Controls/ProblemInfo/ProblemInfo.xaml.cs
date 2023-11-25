@@ -14,7 +14,7 @@ namespace WPFTracker.Controls
     /// </summary>
     public partial class ProblemInfo : UserControl
     {
-        private const string TrackingFilePath = "C:\\Users\\mahes\\source\\repos\\WPFTracker\\TrackedProblems.csv";
+        private const string TrackingFilePath = "C:\\Users\\mahes\\source\\repos\\mpaliath\\WPFTracker\\TrackedProblems.csv";
         private double timeSpent;
         private double minutesAllocated;
 

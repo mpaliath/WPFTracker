@@ -218,7 +218,7 @@ namespace WPFTracker
 
         public enum TrackedItemType { App, Vendor };
 
-        public const string TrackingFilePath = "C:\\Users\\mahes\\source\\repos\\WPFTracker\\TrackedApps.csv";
+        public const string TrackingFilePath = "C:\\Users\\mahes\\source\\repos\\mpaliath\\WPFTracker\\TrackedApps.csv";
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
