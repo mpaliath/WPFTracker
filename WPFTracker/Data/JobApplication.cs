@@ -7,5 +7,6 @@ namespace WPFTracker.Data
         public DateTime Date { get; set; }
         public string Company { get; set; }
         public string AppLink { get; set; }
+        public string Designation { get; set; }
     }
 }

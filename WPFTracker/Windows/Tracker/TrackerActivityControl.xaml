@@ -29,7 +29,7 @@
                     <RowDefinition Height="37" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <localcontrols:AppInfoControl x:Name="AppInfoPopup" Grid.Row="3"/>
+                <localcontrols:AppInfoPopup x:Name="AppInfoPopup" Grid.Row="3"/>
                 <localcontrols:FeedbackPopupControl x:Name="FeedbackPopup" Grid.Row="3"  />
                 <localcontrols:AppsList x:Name="ListPopup" Grid.Row="3"/>
                 <localcontrols:ContactInfoControl x:Name="ContactInfoPopup" Grid.Row="3"/>

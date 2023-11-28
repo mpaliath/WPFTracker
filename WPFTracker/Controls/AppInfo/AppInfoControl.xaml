@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              >
-    <Popup x:Name="InputPopup" IsOpen="False" StaysOpen="True" Opened="InputPopup_Opened" Width="500">
+    
         <Border Background="White" BorderBrush="Black" BorderThickness="1" Padding="10">
             <!-- Custom content for the popup -->
             <StackPanel >
@@ -14,8 +14,14 @@
                 <TextBox x:Name="CompanyTextBox" KeyDown="InputTextBox_KeyDown" />
                 <TextBlock Text="AppLink"/>
                 <TextBox x:Name="AppLinkTextBox" KeyDown="InputTextBox_KeyDown" />
-                <Button Content="Submit" Click="SubmitButton_Click"/>
+            <TextBlock Text="Type"/>
+            <ComboBox x:Name="DesignationComboBox">
+                    <ComboBoxItem Content="Senior" IsSelected="True"/>
+                    <ComboBoxItem Content="Staff"/>
+                    <ComboBoxItem Content="Lead" />
+                    <ComboBoxItem Content="Principal" />
+                </ComboBox>
+                <Button Content="Submit" Click="SubmitButton_Click" Margin="0,5,0,0"/>
             </StackPanel>
         </Border>
-    </Popup>
 </UserControl>

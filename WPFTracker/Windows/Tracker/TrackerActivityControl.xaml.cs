@@ -72,7 +72,7 @@ namespace WPFTracker.Windows.Tracker
                 //FiledTodayCount++;
                 //FiledTodayCount.Text = FiledTodayCount.ToString();
 
-                PersistentTracker.Instance.TrackApp(popupArgs.Company, popupArgs.AppLink);
+                PersistentTracker.Instance.TrackApp(popupArgs.Company, popupArgs.AppLink, popupArgs.Designation);
             }
         }
 

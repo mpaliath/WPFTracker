@@ -194,13 +194,13 @@ namespace WPFTracker
 
         }
 
-        public void TrackApp(string companyName, string appLink)
+        public void TrackApp(string companyName, string appLink, string designation)
         {
             var itemtype = TrackedItemType.App.ToString();
-            var newLine = DateTime.Now.ToString("d") + "," + companyName + "," + appLink + "," + itemtype;
+            var newLine = DateTime.Now.ToString("d") + "," + companyName + "," + appLink + "," + itemtype +"," +designation;
             using StreamWriter writer = new StreamWriter(TrackingFilePath, true);
             writer.WriteLine(newLine);
-            Jobs.Add(new JobApplication() { Company = companyName, AppLink = appLink, Date = DateTime.Today });
+            Jobs.Add(new JobApplication() { Company = companyName, AppLink = appLink, Date = DateTime.Today, Designation = designation });
             this.FiledTodayCount++;
             this.FiledAppsCount++;
         }

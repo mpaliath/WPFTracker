@@ -8,14 +8,16 @@ namespace WPFTracker.Controls
 
     public class PopupClosedEventArgs : EventArgs
     {
-        internal PopupClosedEventArgs(string company, string appLink)
+        internal PopupClosedEventArgs(string company, string appLink, string designation)
         {
             Company = company;
             AppLink = appLink;
+            Designation = designation;
         }
 
         public string Company { get; internal set; }
         public string AppLink { get; internal set; }
+        public string Designation { get; }
     }
 
 
@@ -29,49 +31,42 @@ namespace WPFTracker.Controls
             InitializeComponent();
         }
 
-        public void OpenPopup()
-        {
-            InputPopup.IsOpen = true;
-        }
+        
 
-        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+        private void SubmitButton_Click(object? sender, RoutedEventArgs? e)
         {
             // Close the popup
-            ClosePopup(new PopupClosedEventArgs(CompanyTextBox.Text, AppLinkTextBox.Text));
+            var args = new PopupClosedEventArgs(CompanyTextBox.Text, AppLinkTextBox.Text, DesignationComboBox.Text);
+            ClosePopup(args);
             CompanyTextBox.Text = "";
             AppLinkTextBox.Text = string.Empty;
         }
 
         private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape
-                && string.IsNullOrEmpty(CompanyTextBox.Text)
-                && string.IsNullOrEmpty(AppLinkTextBox.Text))
-            {
-                ClosePopup(null);
-            }
-            else if (e.Key == Key.Enter)
+            if (e.Key == Key.Enter && IsDirty)
             {
                 SubmitButton_Click(null, null);
             }
         }
 
-        public void ClosePopup(EventArgs? e)
+        public void ClosePopup(EventArgs e)
         {
-            InputPopup.IsOpen = false;
-
-            if (e != null)
-            {
-                OnPopupClosed?.Invoke(this, e);
-            }
+            OnSubmit?.Invoke(this, e);
+            
         }
 
-        private void InputPopup_Opened(object sender, EventArgs e)
+        internal void InputPopup_Opened(object sender, EventArgs e)
         {
             CompanyTextBox.Focus(); // Set focus to the TextBox
         }
 
-        public event EventHandler<EventArgs>? OnPopupClosed;
+        public bool IsDirty {
+            get { return !string.IsNullOrEmpty(CompanyTextBox.Text) || !string.IsNullOrEmpty(AppLinkTextBox.Text); }
+                
+        }
+
+        public event EventHandler<EventArgs>? OnSubmit;
 
     }
 }
