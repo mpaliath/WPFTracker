@@ -76,7 +76,7 @@ namespace WPFTracker.Controls
 
             else if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
             {
-                if (!(PopupContent.Content as IAcceptInput).IsDirty || CanClosePopup())
+                if (CanClosePopup())
                     ClosePopup(null, null);
             }
         }

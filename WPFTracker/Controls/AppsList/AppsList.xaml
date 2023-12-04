@@ -14,7 +14,7 @@
                       ItemsSource="{Binding Source={x:Static local:PersistentTracker.Instance}, Path=Jobs}" 
                       d:ItemsSource="{d:SampleData ItemCount=5}" 
                       CanUserAddRows="False" 
-                      CanUserDeleteRows="False" 
+                      CanUserDeleteRows="True" 
                       Loaded="dataGrid_Loaded">
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">

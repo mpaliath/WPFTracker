@@ -201,6 +201,7 @@ namespace WPFTracker
                 var newLine = job.Date + "," + job.Company + "," + job.AppLink + "," + TrackedItemType.App.ToString() + "," + job.Designation;
                 writer.WriteLine(newLine);
                 job.HasChanged = false;
+                this.FiledAppsCount = Jobs.Count;
             }
             foreach (var vendor in Vendors)
             {
