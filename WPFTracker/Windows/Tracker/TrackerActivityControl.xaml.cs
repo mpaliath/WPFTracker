@@ -16,8 +16,11 @@ namespace WPFTracker.Windows.Tracker
     {
 
         private TrackerWindowViewModel viewModel;
+        private AppInfoControl appInfoControl;
+        private AppsList appsListControl;
         private SystemTimer resetTimer;
         private bool isCollapsed;
+
 
         private TimeSpan GetTimeUntilMidnight()
         {
@@ -47,45 +50,45 @@ namespace WPFTracker.Windows.Tracker
 
             this.viewModel = (TrackerWindowViewModel)this.DataContext;
 
+            this.appInfoControl = new AppInfoControl();
+            appInfoControl.OnNewApp += OnAppInfoPopupClosed;
 
-            AppInfoPopup.OnPopupClosed += OnAppInfoPopupClosed;
+            this.appsListControl = new AppsList();
+            InputPopupControl.OnPopupClosing += InputPopupControl_OnPopupClosing;
+
+
+            //AppInfoPopup.OnPopupClosed += OnAppInfoPopupClosed;
             ContactInfoPopup.OnPopupClosed += ContactInfoPopup_OnPopupClosed;
 
         }
 
+        private bool InputPopupControl_OnPopupClosing()
+        {
+            PersistentTracker.Instance.UpdateApps();
+            return true;
+        }
 
+        private void OnAppsListClosed(object arg1, EventArgs args)
+        {
+            throw new NotImplementedException();
+        }
 
         private void AppsFiledToday_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-
-            AppInfoPopup.OpenPopup();
-
+            InputPopupControl.OpenPopup(this.appInfoControl);
         }
 
-        private void OnAppInfoPopupClosed(object? sender, EventArgs e)
+        private void OnAppInfoPopupClosed(NewAppInfoEventArgs info)
         {
-            if (e == EventArgs.Empty) { return; }
+            //FiledTodayCount++;
+            //FiledTodayCount.Text = FiledTodayCount.ToString();
 
-            var popupArgs = (PopupClosedEventArgs)e;
-            if (popupArgs != null)
-            {
-                //FiledTodayCount++;
-                //FiledTodayCount.Text = FiledTodayCount.ToString();
-
-                PersistentTracker.Instance.TrackApp(popupArgs.Company, popupArgs.AppLink, popupArgs.Designation);
-            }
+            PersistentTracker.Instance.TrackApp(info.Company, info.AppLink, info.Designation);
         }
 
         private void AppsFiled_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (ListPopup.IsOpen)
-            {
-                ListPopup.ClosePopup();
-            }
-            else
-            {
-                ListPopup.OpenPopup();
-            }
+            InputPopupControl.OpenPopup(this.appsListControl);
         }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)

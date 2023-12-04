@@ -3,8 +3,10 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Windows.Markup;
 using WPFTracker.Data;
 
 namespace WPFTracker
@@ -100,6 +102,7 @@ namespace WPFTracker
         }
 
         public static PersistentTracker Instance = new PersistentTracker();
+        private string[] TrackedAppsHeaders = new string[] { "Date", "Company", "AppLink/VendorName", "Type", "Designation" };
 
         public ObservableCollection<JobApplication> Jobs { get; }
         public ObservableCollection<VendorDetails> Vendors { get; }
@@ -136,12 +139,7 @@ namespace WPFTracker
                     {
 
                         // Assuming the CSV columns are: Name, Age, Email
-                        JobApplication job = new JobApplication
-                        {
-                            Date = DateTime.Parse(fields[0]),
-                            Company = fields[1],
-                            AppLink = fields[2]
-                        };
+                        JobApplication job = new JobApplication(DateTime.Parse(fields[0]), fields[1], fields[2], "Unknown");
 
                         Jobs.Add(job);
                     }
@@ -194,13 +192,30 @@ namespace WPFTracker
 
         }
 
+        public void UpdateApps()
+        {
+            using StreamWriter writer = new StreamWriter(TrackingFilePath, false);
+            writer.WriteLine(string.Join(",", TrackedAppsHeaders.Select(item => "'" + item + "'")));
+            foreach (var job in Jobs)
+            {
+                var newLine = job.Date + "," + job.Company + "," + job.AppLink + "," + TrackedItemType.App.ToString() + "," + job.Designation;
+                writer.WriteLine(newLine);
+                job.HasChanged = false;
+            }
+            foreach (var vendor in Vendors)
+            {
+                var newLine = vendor.Date + "," + vendor.Name + "," + vendor.Company + "," + TrackedItemType.Vendor.ToString();
+                writer.WriteLine(newLine);
+            }
+        }
+
         public void TrackApp(string companyName, string appLink, string designation)
         {
             var itemtype = TrackedItemType.App.ToString();
             var newLine = DateTime.Now.ToString("d") + "," + companyName + "," + appLink + "," + itemtype +"," +designation;
             using StreamWriter writer = new StreamWriter(TrackingFilePath, true);
             writer.WriteLine(newLine);
-            Jobs.Add(new JobApplication() { Company = companyName, AppLink = appLink, Date = DateTime.Today, Designation = designation });
+            Jobs.Add(new JobApplication(DateTime.Today, companyName, appLink, designation));
             this.FiledTodayCount++;
             this.FiledAppsCount++;
         }
@@ -219,6 +234,7 @@ namespace WPFTracker
         public enum TrackedItemType { App, Vendor };
 
         public const string TrackingFilePath = "C:\\Users\\mahes\\source\\repos\\mpaliath\\WPFTracker\\TrackedApps.csv";
+        public const string TrackingFilePath1 = "C:\\Users\\mahes\\source\\repos\\mpaliath\\WPFTracker\\TrackedApps1.csv";
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {

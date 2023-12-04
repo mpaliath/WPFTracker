@@ -7,12 +7,24 @@
              xmlns:local="clr-namespace:WPFTracker"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Popup x:Name="ListPopup" IsOpen="False" StaysOpen="True" Opened="ListPopup_Opened" Width="500" KeyDown="ListPopup_OnKeyDown">
-        <Border Background="White" BorderBrush="Black" BorderThickness="1" Padding="10">
-            <DataGrid x:Name="dataGrid" AutoGenerateColumns="True" ItemsSource="{Binding Source={x:Static local:PersistentTracker.Instance}, Path=Jobs}" d:ItemsSource="{d:SampleData ItemCount=5}" KeyDown="ListPopup_OnKeyDown" CanUserAddRows="False" CanUserDeleteRows="False" Loaded="dataGrid_Loaded"/>
 
-            <!-- Custom content for the popup -->
-
-        </Border>
-    </Popup>
+    <Border Background="White" BorderBrush="Black" BorderThickness="1" Padding="10">
+        <DataGrid x:Name="dataGrid" 
+                      AutoGenerateColumns="True" 
+                      ItemsSource="{Binding Source={x:Static local:PersistentTracker.Instance}, Path=Jobs}" 
+                      d:ItemsSource="{d:SampleData ItemCount=5}" 
+                      CanUserAddRows="False" 
+                      CanUserDeleteRows="False" 
+                      Loaded="dataGrid_Loaded">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding HasChanged}" Value="True">
+                            <Setter Property="Background" Value="LightYellow"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+        </DataGrid>
+    </Border>
 </UserControl>

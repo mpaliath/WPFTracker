@@ -24,7 +24,7 @@ namespace WPFTracker.Controls.TrackerTaskbarIcon
         private void InitializeTaskbarIcon()
         {
             taskbarIcon = new TaskbarIcon();
-            taskbarIcon.Icon = new System.Drawing.Icon(@"Assets\Icon.ico");
+            taskbarIcon.Icon = new System.Drawing.Icon(@"Assets\WhiteBackground.ico");
 
             // Create a custom popup
             var popup = new Popup();

@@ -29,9 +29,12 @@
                     <RowDefinition Height="37" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <localcontrols:AppInfoPopup x:Name="AppInfoPopup" Grid.Row="3"/>
+                <!-- Use InputPopupControl and set its content based on the selected control -->
+                <localcontrols:InputPopupControl x:Name="InputPopupControl" Grid.Row="3">
+                    <!-- Content set dynamically based on the selected control -->
+                    <!-- For example, to display AppsList, set Content="{Binding ElementName=AppsList}" -->
+                </localcontrols:InputPopupControl>
                 <localcontrols:FeedbackPopupControl x:Name="FeedbackPopup" Grid.Row="3"  />
-                <localcontrols:AppsList x:Name="ListPopup" Grid.Row="3"/>
                 <localcontrols:ContactInfoControl x:Name="ContactInfoPopup" Grid.Row="3"/>
                 <localcontrols:VendorsList x:Name="VendorsPopup"  Grid.Row="3"/>
                 <Border Background="White" BorderBrush="Black" BorderThickness="1,1,1,0" Grid.Column="0" Grid.Row="1" Margin="0,0,0,0">

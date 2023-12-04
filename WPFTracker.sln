@@ -7,9 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFTracker", "WPFTracker\WP
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6D26E557-79F1-4B59-9ADB-604E27B04B12}"
 	ProjectSection(SolutionItems) = preProject
-		Icon.ico = Icon.ico
+		WPFTracker\Blue.ico = WPFTracker\Blue.ico
 		..\..\..\..\..\Windows\Media\tada.wav = ..\..\..\..\..\Windows\Media\tada.wav
 		TrackedApps.csv = TrackedApps.csv
+		WPFTracker\WhiteBackground.ico = WPFTracker\WhiteBackground.ico
 	EndProjectSection
 EndProject
 Global

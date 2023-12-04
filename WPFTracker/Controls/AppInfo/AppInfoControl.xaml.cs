@@ -6,9 +6,9 @@ using System.Windows.Input;
 namespace WPFTracker.Controls
 {
 
-    public class PopupClosedEventArgs : EventArgs
+    public class NewAppInfoEventArgs : EventArgs
     {
-        internal PopupClosedEventArgs(string company, string appLink, string designation)
+        internal NewAppInfoEventArgs(string company, string appLink, string designation)
         {
             Company = company;
             AppLink = appLink;
@@ -20,24 +20,27 @@ namespace WPFTracker.Controls
         public string Designation { get; }
     }
 
+    public delegate void OnNewAppInfo(NewAppInfoEventArgs info);
 
     /// <summary>
     /// Interaction logic for AppInfo.xaml
     /// </summary>
-    public partial class AppInfoControl : UserControl
+    public partial class AppInfoControl : UserControl, IAcceptInput
     {
         public AppInfoControl()
         {
             InitializeComponent();
         }
 
+        public event OnNewAppInfo OnNewApp;
+
         
 
         private void SubmitButton_Click(object? sender, RoutedEventArgs? e)
         {
             // Close the popup
-            var args = new PopupClosedEventArgs(CompanyTextBox.Text, AppLinkTextBox.Text, DesignationComboBox.Text);
-            ClosePopup(args);
+            var args = new NewAppInfoEventArgs(CompanyTextBox.Text, AppLinkTextBox.Text, DesignationComboBox.Text);
+            OnNewApp(args);
             CompanyTextBox.Text = "";
             AppLinkTextBox.Text = string.Empty;
         }
@@ -50,13 +53,13 @@ namespace WPFTracker.Controls
             }
         }
 
-        public void ClosePopup(EventArgs e)
+        public void OnClosing(object sender, EventArgs e)
         {
             OnSubmit?.Invoke(this, e);
             
         }
 
-        internal void InputPopup_Opened(object sender, EventArgs e)
+        public void OnOpened(object sender, EventArgs e)
         {
             CompanyTextBox.Focus(); // Set focus to the TextBox
         }

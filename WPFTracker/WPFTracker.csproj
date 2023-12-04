@@ -5,11 +5,11 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>WhiteBackground.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Icon.ico" />
+    <Content Include="WhiteBackground.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,11 +24,23 @@
     <Compile Update="Controls\VendorsList\VendorsList.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -39,7 +51,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="mkdir &quot;$(OutputPath)\Assets&quot;&#xD;&#xA;copy &quot;$(SolutionDir)\Icon.ico&quot; &quot;$(OutputPath)\Assets\&quot;" />
+    <Exec Command="mkdir &quot;$(OutputPath)\Assets&quot;&#xD;&#xA;copy &quot;$(SolutionDir)\*.ico&quot; &quot;$(OutputPath)\Assets\&quot;" />
   </Target>
 
 </Project>

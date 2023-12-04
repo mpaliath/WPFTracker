@@ -38,7 +38,7 @@ namespace WPFTracker.Controls
 
         private void InputPopup_Opened(object sender, EventArgs e)
         {
-            InnerControl.InputPopup_Opened(sender, e);
+            InnerControl.OnOpened(sender, e);
         }
 
         public void OpenPopup()
